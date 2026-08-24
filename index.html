@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Body Recomp · Three Training Splits</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171B;
+    --panel: #1C2026;
+    --panel-2: #23272E;
+    --border: rgba(237, 232, 220, 0.08);
+    --border-strong: rgba(237, 232, 220, 0.16);
+    --ink: #EDE8DC;
+    --ink-dim: #B8B4A9;
+    --muted: #7A7F86;
+    --accent: #E5B234;
+    --accent-dim: rgba(229, 178, 52, 0.12);
+    --rest-bg: rgba(237, 232, 220, 0.03);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 24px 0 44px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero-meta::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(56px, 10vw, 108px);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .hero-title .accent { color: var(--accent); font-style: italic; }
+  .hero-sub {
+    margin-top: 24px;
+    color: var(--ink-dim);
+    font-size: 15px;
+    max-width: 540px;
+    line-height: 1.6;
+  }
+
+  /* TABS */
+  .tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 48px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    padding: 12px 0;
+  }
+  .tab {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--ink-dim);
+    padding: 18px 20px;
+    cursor: pointer;
+    font-family: inherit;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    border-radius: 2px;
+  }
+  .tab:hover {
+    border-color: var(--border-strong);
+    color: var(--ink);
+  }
+  .tab.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #14171B;
+  }
+  .tab-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    opacity: 0.72;
+  }
+  .tab-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    line-height: 1;
+  }
+  .tab-desc {
+    font-size: 12px;
+    opacity: 0.72;
+  }
+
+  /* SPLIT SECTIONS */
+  .split { display: none; }
+  .split.active { display: block; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .split-header {
+    margin-bottom: 56px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .split-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 108px;
+    line-height: 0.78;
+    color: var(--accent);
+    font-style: italic;
+  }
+  .split-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: 0.005em;
+    margin-bottom: 10px;
+  }
+  .split-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .split-intro {
+    color: var(--ink-dim);
+    max-width: 620px;
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-label .count {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* OVERVIEW TABLE */
+  .overview { margin-bottom: 56px; }
+  .week-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .week-table th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 12px 12px 0;
+    border-bottom: 1px solid var(--border-strong);
+    font-weight: 500;
+  }
+  .week-table td {
+    padding: 16px 12px 16px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    vertical-align: middle;
+  }
+  .week-table td.day {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    width: 70px;
+    font-size: 17px;
+    letter-spacing: 0.02em;
+  }
+  .week-table td.muscles {
+    color: var(--ink-dim);
+    font-size: 13px;
+  }
+  .week-table tr.rest td {
+    color: var(--muted);
+    background: var(--rest-bg);
+  }
+  .week-table tr.rest td.day {
+    color: var(--muted);
+  }
+  .rest-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* DAYS */
+  .days {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 48px;
+  }
+  .day-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 28px 28px 20px;
+    border-radius: 2px;
+  }
+  .day-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .day-marker {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: var(--accent);
+    text-transform: uppercase;
+    line-height: 1;
+    font-style: italic;
+  }
+  .day-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+  }
+  .day-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 22px;
+    letter-spacing: 0.02em;
+    line-height: 1.1;
+    color: var(--ink);
+    flex: 1;
+    min-width: 200px;
+  }
+
+  /* EXERCISE TABLE */
+  .ex-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .ex-table tr {
+    border-bottom: 1px solid var(--border);
+  }
+  .ex-table tr:last-child { border-bottom: none; }
+  .ex-table td {
+    padding: 14px 8px 14px 0;
+    vertical-align: top;
+  }
+  .ex-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    width: 36px;
+    padding-top: 16px;
+  }
+  .ex-name {
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+    font-size: 14.5px;
+  }
+  .ex-note {
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+    font-style: italic;
+  }
+  td.reps, td.rest {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    white-space: nowrap;
+    text-align: right;
+    padding-left: 12px;
+    padding-top: 16px;
+    font-weight: 500;
+  }
+  td.rest {
+    color: var(--ink-dim);
+    font-weight: 400;
+  }
+
+  /* SUPERSETS (Split 3) */
+  .superset {
+    background: var(--panel-2);
+    border-left: 2px solid var(--accent);
+    margin: 8px 0;
+    padding: 4px 0 4px 16px;
+  }
+  .superset-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 12px 0 6px;
+    display: block;
+  }
+  .superset .ex-table tr:last-child { border-bottom: none; }
+
+  /* NOTES / FOOTER OF SPLIT */
+  .split-notes {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+  .split-notes h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .split-notes ul {
+    list-style: none;
+    padding: 0;
+  }
+  .split-notes li {
+    padding: 10px 0 10px 24px;
+    color: var(--ink-dim);
+    position: relative;
+    font-size: 14px;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--border);
+  }
+  .split-notes li:last-child { border-bottom: none; }
+  .split-notes li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .split-notes li strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .warmup-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    padding: 14px 20px;
+    border: 1px dashed var(--border-strong);
+    border-radius: 2px;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+  .warmup-note strong {
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* FOOTER */
+  footer {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .container { padding: 24px 16px 60px; }
+    .tabs { grid-template-columns: 1fr; gap: 6px; }
+    .tab { padding: 14px 16px; flex-direction: row; align-items: center; gap: 12px; }
+    .tab-num { font-size: 13px; }
+    .tab-label { font-size: 16px; }
+    .tab-desc { margin-left: auto; }
+    .split-header { grid-template-columns: 1fr; gap: 12px; }
+    .split-num { font-size: 72px; }
+    .split-title { font-size: 32px; }
+    .day-card { padding: 20px 18px 14px; }
+    .day-marker { font-size: 24px; }
+    .day-title { font-size: 17px; }
+    .ex-name { font-size: 14px; }
+    .ex-note { font-size: 11.5px; }
+    td.reps, td.rest { font-size: 12px; padding-left: 8px; }
+    .ex-num { width: 28px; font-size: 10px; }
+    .split-notes { padding: 20px; }
+    .week-table td.muscles { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-meta">Training block · 5 days/week</div>
+    <h1 class="hero-title">Body<br><span class="accent">Recomp</span></h1>
+    <p class="hero-sub">Three splits for intermediate lifters in a caloric deficit — designed to preserve muscle, drive fat loss, and progress week over week. Pick the one that fits your recovery and schedule.</p>
+  </header>
+
+  <!-- TABS -->
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-target="split-1" role="tab">
+      <span class="tab-num">01</span>
+      <span class="tab-label">Push / Pull</span>
+      <span class="tab-desc">Legs on push days</span>
+    </button>
+    <button class="tab" data-target="split-2" role="tab">
+      <span class="tab-num">02</span>
+      <span class="tab-label">Upper / Lower</span>
+      <span class="tab-desc">Balanced volume</span>
+    </button>
+    <button class="tab" data-target="split-3" role="tab">
+      <span class="tab-num">03</span>
+      <span class="tab-label">Antagonist Pairs</span>
+      <span class="tab-desc">Superset density</span>
+    </button>
+  </nav>
+
+  <main>
+
+  <!-- ================================================== -->
+  <!-- SPLIT 1: PUSH / PULL -->
+  <!-- ================================================== -->
+  <section id="split-1" class="split active">
+    <div class="split-header">
+      <div class="split-num">01</div>
+      <div>
+        <h2 class="split-title">Push / Pull</h2>
+        <div class="split-tag">Legs squeezed onto push days</div>
+        <p class="split-intro">Lower body split across two "push + legs" days — quads on Monday, posterior chain on Wednesday. Every leg session lives inside your Mon–Thu window, and one workload per body part per week keeps recovery honest during a cut.</p>
+      </div>
+    </div>
+
+    <div class="overview">
+      <div class="section-label"><span>Weekly Overview</span><span class="count">5 sessions</span></div>
+      <table class="week-table">
+        <thead><tr><th>Day</th><th>Focus</th><th>Muscle Groups</th></tr></thead>
+        <tbody>
+          <tr><td class="day">Mon</td><td>Push A + Quads</td><td class="muscles">Chest · Quads · Triceps</td></tr>
+          <tr><td class="day">Tue</td><td>Pull A</td><td class="muscles">Back · Biceps · Rear Delts</td></tr>
+          <tr><td class="day">Wed</td><td>Push B + Posterior</td><td class="muscles">Shoulders · Hamstrings/Glutes · Calves</td></tr>
+          <tr><td class="day">Thu</td><td>Pull B</td><td class="muscles">Back · Biceps · Forearms</td></tr>
+          <tr class="rest"><td class="day">Fri</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
+          <tr><td class="day">Sat</td><td>Push C</td><td class="muscles">Chest · Shoulders · Triceps</td></tr>
+          <tr class="rest"><td class="day">Sun</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warmup-note"><strong>Warm-up</strong> &nbsp; 5 min incline walk or bike + 2 light warm-up sets on the first compound movement.</div>
+
+    <div class="section-label"><span>Daily Sessions</span><span class="count">5 days</span></div>
+    <div class="days">
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 01</span>
+          <span class="day-tag">Mon</span>
+          <h3 class="day-title">Chest · Quads · Triceps</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Barbell Bench Press</div><div class="ex-note">Tight scap, feet planted, controlled descent</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Barbell Back Squat</div><div class="ex-note">Brace hard; hips and knees break together</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Incline Dumbbell Press (30°)</div><div class="ex-note">Upper chest bias</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Leg Press</div><div class="ex-note">Full ROM, no lockout</div></td><td class="reps">3 × 10–12</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Cable Tricep Pushdown (rope)</div><div class="ex-note">Elbows pinned; spread rope at bottom</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Overhead DB Tricep Extension</div><div class="ex-note">Deep stretch on long head</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 02</span>
+          <span class="day-tag">Tue</span>
+          <h3 class="day-title">Back · Biceps · Rear Delts</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Weighted Pull-up (or Lat Pulldown)</div><div class="ex-note">Full hang, chest to bar</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Barbell Bent-Over Row</div><div class="ex-note">Neutral spine, pull to lower ribs</div></td><td class="reps">4 × 6–8</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Seated Cable Row (V-handle)</div><div class="ex-note">Squeeze scaps, no torso swing</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Face Pull (rope, high pulley)</div><div class="ex-note">External rotation at end range</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Barbell Curl</div><div class="ex-note">Elbows fixed at sides</div></td><td class="reps">3 × 8–10</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Incline Dumbbell Curl</div><div class="ex-note">Long head stretch</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 03</span>
+          <span class="day-tag">Wed</span>
+          <h3 class="day-title">Shoulders · Hams/Glutes · Calves</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Barbell Overhead Press (standing)</div><div class="ex-note">Glutes squeezed, ribs down</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Romanian Deadlift</div><div class="ex-note">Hinge hips, slight knee bend, bar close</div></td><td class="reps">4 × 6–8</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Dumbbell Lateral Raise</div><div class="ex-note">Slight forward lean, pinky higher</div></td><td class="reps">4 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Barbell Hip Thrust</div><div class="ex-note">Chin tucked, full lockout</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Standing Calf Raise</div><div class="ex-note">Full stretch at bottom, pause at top</div></td><td class="reps">4 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Seated Calf Raise</div><div class="ex-note">Soleus focus, slow tempo</div></td><td class="reps">3 × 15–20</td><td class="rest">45s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 04</span>
+          <span class="day-tag">Thu</span>
+          <h3 class="day-title">Back · Biceps · Forearms</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Deadlift (conventional or trap bar)</div><div class="ex-note">Reset each rep, no bounce</div></td><td class="reps">3 × 5</td><td class="rest">3m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Chin-up (supinated grip)</div><div class="ex-note">Full ROM, dead hang bottom</div></td><td class="reps">3 × 8–10</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Chest-Supported T-Bar Row</div><div class="ex-note">Eliminate cheat, isolate back</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Preacher Curl (EZ-bar)</div><div class="ex-note">Slow eccentric, no swinging</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Cable Hammer Curl (rope)</div><div class="ex-note">Brachialis focus</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Wrist Curl + Reverse Wrist Curl</div><div class="ex-note">15–20 each direction, back to back</div></td><td class="reps">3 × 15–20</td><td class="rest">45s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 05</span>
+          <span class="day-tag">Sat</span>
+          <h3 class="day-title">Chest · Shoulders · Triceps</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Incline Barbell Bench Press</div><div class="ex-note">30° bench, elbows ~45°</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Seated Dumbbell Shoulder Press</div><div class="ex-note">Neutral or slight incline back support</div></td><td class="reps">4 × 8–10</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Cable Crossover (high to low)</div><div class="ex-note">Chest squeeze at bottom</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Cable Lateral Raise</div><div class="ex-note">Constant tension advantage over dumbbells</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Close-Grip Bench Press</div><div class="ex-note">Shoulder-width grip, elbows tucked</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Rope Tricep Extension (overhead)</div><div class="ex-note">Full stretch on long head</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+    </div>
+
+    <div class="split-notes">
+      <h4>Progression Rules</h4>
+      <ul>
+        <li><strong>Compounds</strong> (bench, squat, OHP, deadlift, row): add 2.5 kg when you hit the top of the rep range on all sets with clean form.</li>
+        <li><strong>Isolations:</strong> add reps first, then add weight once you've held the top of the range for two sessions.</li>
+        <li><strong>Log every session</strong> — RPE, weight, reps. Progressive overload during a cut is guesswork without a log.</li>
+      </ul>
+    </div>
+
+    <div class="split-notes">
+      <h4>Cut-Phase Notes</h4>
+      <ul>
+        <li>Rest periods are non-negotiable on the compounds — strength retention matters more than sweating through a session.</li>
+        <li>If a compound feels 1–2 reps weaker two sessions in a row, check sleep, protein, and calories before blaming programming.</li>
+        <li>Optional finisher (2×/week max): 8–10 min incline walk after training. Skip intervals — recovery is already stressed.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- SPLIT 2: UPPER / LOWER -->
+  <!-- ================================================== -->
+  <section id="split-2" class="split">
+    <div class="split-header">
+      <div class="split-num">02</div>
+      <div>
+        <h2 class="split-title">Upper / Lower</h2>
+        <div class="split-tag">Balanced volume · Arms specialization</div>
+        <p class="split-intro">Classic upper/lower rotation with a fifth "arms and shoulders" specialization day on Saturday. Both leg sessions fall on Tuesday and Thursday — inside your Mon–Thu window with a rest day between them.</p>
+      </div>
+    </div>
+
+    <div class="overview">
+      <div class="section-label"><span>Weekly Overview</span><span class="count">5 sessions</span></div>
+      <table class="week-table">
+        <thead><tr><th>Day</th><th>Focus</th><th>Muscle Groups</th></tr></thead>
+        <tbody>
+          <tr><td class="day">Mon</td><td>Upper A</td><td class="muscles">Chest · Back · Shoulders</td></tr>
+          <tr><td class="day">Tue</td><td>Lower A</td><td class="muscles">Quads · Hamstrings · Calves</td></tr>
+          <tr><td class="day">Wed</td><td>Upper B</td><td class="muscles">Chest · Back · Arms</td></tr>
+          <tr><td class="day">Thu</td><td>Lower B</td><td class="muscles">Quads · Glutes · Calves</td></tr>
+          <tr class="rest"><td class="day">Fri</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
+          <tr><td class="day">Sat</td><td>Upper C</td><td class="muscles">Shoulders · Biceps · Triceps</td></tr>
+          <tr class="rest"><td class="day">Sun</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warmup-note"><strong>Warm-up</strong> &nbsp; 5 min incline walk or bike + 2 light warm-up sets on the first compound movement.</div>
+
+    <div class="section-label"><span>Daily Sessions</span><span class="count">5 days</span></div>
+    <div class="days">
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 01</span>
+          <span class="day-tag">Mon · Upper A</span>
+          <h3 class="day-title">Chest · Back · Shoulders</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Barbell Bench Press</div><div class="ex-note">Prime chest lift; treat as strength work</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Barbell Bent-Over Row</div><div class="ex-note">Torso ~45°, pull to lower ribs</div></td><td class="reps">4 × 6–8</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Seated Overhead Press</div><div class="ex-note">Back-supported = safer for cut-phase fatigue</div></td><td class="reps">3 × 8–10</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Incline Dumbbell Press</div><div class="ex-note">Upper pec bias</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Lat Pulldown (wide grip)</div><div class="ex-note">Slight backward lean, elbows drive down</div></td><td class="reps">3 × 10–12</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Dumbbell Lateral Raise</div><div class="ex-note">Slight forward lean</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 02</span>
+          <span class="day-tag">Tue · Lower A</span>
+          <h3 class="day-title">Quads · Hamstrings · Calves</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Barbell Back Squat</div><div class="ex-note">Depth over weight — build the pattern</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Romanian Deadlift</div><div class="ex-note">Hinge dominant, hamstring stretch</div></td><td class="reps">4 × 6–8</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Leg Press</div><div class="ex-note">Feet mid-platform, full ROM</div></td><td class="reps">3 × 10–12</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Lying or Seated Leg Curl</div><div class="ex-note">Slow eccentric, full contraction</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Standing Calf Raise</div><div class="ex-note">Full stretch, brief pause at top</div></td><td class="reps">4 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Hanging Leg Raise</div><div class="ex-note">Core finisher, no swing</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 03</span>
+          <span class="day-tag">Wed · Upper B</span>
+          <h3 class="day-title">Chest · Back · Arms</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Incline Barbell Bench Press</div><div class="ex-note">30° angle, elbows ~45°</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Weighted Pull-up (or Lat Pulldown)</div><div class="ex-note">Full ROM</div></td><td class="reps">4 × 6–8</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Chest-Supported Row</div><div class="ex-note">Isolate back, kill momentum</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Cable Fly (mid)</div><div class="ex-note">Squeeze and hold 1 second at midline</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Barbell Curl</div><div class="ex-note">No elbow drift, no swing</div></td><td class="reps">3 × 8–10</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Cable Tricep Pushdown</div><div class="ex-note">Elbows pinned, full extension</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 04</span>
+          <span class="day-tag">Thu · Lower B</span>
+          <h3 class="day-title">Quads · Glutes · Calves</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Bulgarian Split Squat (DB)</div><div class="ex-note">Front leg ~70% loaded, deep ROM</div></td><td class="reps">4 × 8–10/leg</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Barbell Hip Thrust</div><div class="ex-note">Chin tucked, hold lockout 1 second</div></td><td class="reps">4 × 8–10</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Walking Lunge (DB)</div><div class="ex-note">Long stride for glute stretch</div></td><td class="reps">3 × 10–12/leg</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Leg Extension</div><div class="ex-note">Slow eccentric, isolate quads</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Seated Calf Raise</div><div class="ex-note">Soleus focus</div></td><td class="reps">4 × 15–20</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Ab Wheel Rollout (or Cable Crunch)</div><div class="ex-note">Full extension without arching lower back</div></td><td class="reps">3 × 8–12</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 05</span>
+          <span class="day-tag">Sat · Upper C</span>
+          <h3 class="day-title">Shoulders · Biceps · Triceps</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Seated Dumbbell Shoulder Press</div><div class="ex-note">Full ROM without shrugging</div></td><td class="reps">4 × 8–10</td><td class="rest">2m</td></tr>
+            <tr><td class="ex-num">02</td><td><div class="ex-name">Dumbbell Lateral Raise</div><div class="ex-note">The medial delt builder</div></td><td class="reps">4 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Face Pull (rope, high pulley)</div><div class="ex-note">Rear delts + rotator cuff health</div></td><td class="reps">3 × 15–20</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">EZ-Bar Curl</div><div class="ex-note">Wrist-friendly barbell curl</div></td><td class="reps">3 × 8–10</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Close-Grip Bench Press</div><div class="ex-note">Compound tricep mass builder</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Rope Overhead Extension</div><div class="ex-note">Long head stretch</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+    </div>
+
+    <div class="split-notes">
+      <h4>Progression Rules</h4>
+      <ul>
+        <li><strong>Compounds:</strong> add 2.5 kg once you hit the top of the rep range on all sets with clean form.</li>
+        <li><strong>Isolations:</strong> add reps first, then weight.</li>
+        <li><strong>Track every session.</strong> Progressive overload in a deficit is a game of small weekly wins, not big jumps.</li>
+      </ul>
+    </div>
+
+    <div class="split-notes">
+      <h4>Cut-Phase Notes</h4>
+      <ul>
+        <li>The Saturday arms/shoulders day is deliberately lower-fatigue — it lets you push Mon–Thu harder without wrecking recovery.</li>
+        <li>If you're gassed by Thursday, cut accessory volume (drop the last 2 sets) before cutting compounds.</li>
+        <li>Skip finisher cardio on this split — 4 heavy sessions in 4 days is already a lot to recover from.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================================================== -->
+  <!-- SPLIT 3: ANTAGONIST PAIRS -->
+  <!-- ================================================== -->
+  <section id="split-3" class="split">
+    <div class="split-header">
+      <div class="split-num">03</div>
+      <div>
+        <h2 class="split-title">Antagonist Pairs</h2>
+        <div class="split-tag">Supersets · Highest metabolic demand</div>
+        <p class="split-intro">Opposing muscle groups paired in supersets. This style is ideal for a cut — it compresses training time, drives metabolic demand (helps fat loss), and pushes more blood through working muscles. Do one set of A, rest ~15s, one set of B, then the listed rest before the next round.</p>
+      </div>
+    </div>
+
+    <div class="overview">
+      <div class="section-label"><span>Weekly Overview</span><span class="count">5 sessions</span></div>
+      <table class="week-table">
+        <thead><tr><th>Day</th><th>Focus</th><th>Muscle Groups</th></tr></thead>
+        <tbody>
+          <tr><td class="day">Mon</td><td>Chest × Back + Core</td><td class="muscles">Chest · Back · Abs</td></tr>
+          <tr><td class="day">Tue</td><td>Quads × Hamstrings + Calves</td><td class="muscles">Quads · Hamstrings · Calves</td></tr>
+          <tr><td class="day">Wed</td><td>Shoulders + Bi × Tri</td><td class="muscles">Shoulders · Biceps · Triceps</td></tr>
+          <tr><td class="day">Thu</td><td>Chest × Back + Core (variation)</td><td class="muscles">Chest · Back · Abs</td></tr>
+          <tr class="rest"><td class="day">Fri</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
+          <tr><td class="day">Sat</td><td>Upper Compound</td><td class="muscles">Chest · Back · Arms</td></tr>
+          <tr class="rest"><td class="day">Sun</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="warmup-note"><strong>Warm-up</strong> &nbsp; 5 min incline walk or bike + 2 light warm-up sets on the first superset.</div>
+
+    <div class="section-label"><span>Daily Sessions</span><span class="count">5 days</span></div>
+    <div class="days">
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 01</span>
+          <span class="day-tag">Mon</span>
+          <h3 class="day-title">Chest × Back + Core</h3>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset A · rest 2–3m between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">1a</td><td><div class="ex-name">Barbell Bench Press</div><div class="ex-note">Full ROM, controlled</div></td><td class="reps">4 × 6–8</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">1b</td><td><div class="ex-name">Barbell Bent-Over Row</div><div class="ex-note">Match the load style — heavy and clean</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset B · rest 90s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">2a</td><td><div class="ex-name">Incline Dumbbell Press</div><div class="ex-note">30° bench</div></td><td class="reps">3 × 8–10</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">2b</td><td><div class="ex-name">Chest-Supported Row</div><div class="ex-note">Kill momentum</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset C · rest 60s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">3a</td><td><div class="ex-name">Cable Fly (mid)</div><div class="ex-note">Squeeze midline</div></td><td class="reps">3 × 10–12</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">3b</td><td><div class="ex-name">Straight-Arm Pulldown</div><div class="ex-note">Lat isolation</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Hanging Leg Raise</div><div class="ex-note">No swing</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Cable Woodchop</div><div class="ex-note">Rotational core</div></td><td class="reps">3 × 10–12/side</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Plank</div><div class="ex-note">Glutes squeezed, no sag</div></td><td class="reps">3 × 45–60s</td><td class="rest">45s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 02</span>
+          <span class="day-tag">Tue</span>
+          <h3 class="day-title">Quads × Hamstrings + Calves</h3>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset A · rest 2–3m between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">1a</td><td><div class="ex-name">Barbell Back Squat</div><div class="ex-note">Depth over weight</div></td><td class="reps">4 × 6–8</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">1b</td><td><div class="ex-name">Romanian Deadlift</div><div class="ex-note">Hinge dominant</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset B · rest 90s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">2a</td><td><div class="ex-name">Leg Press</div><div class="ex-note">Feet mid-platform</div></td><td class="reps">3 × 10–12</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">2b</td><td><div class="ex-name">Seated Leg Curl</div><div class="ex-note">Slow eccentric</div></td><td class="reps">3 × 10–12</td><td class="rest">90s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">03</td><td><div class="ex-name">Walking Lunge (DB)</div><div class="ex-note">Long stride</div></td><td class="reps">3 × 10/leg</td><td class="rest">90s</td></tr>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Standing Calf Raise</div><div class="ex-note">Full stretch</div></td><td class="reps">4 × 12–15</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Seated Calf Raise</div><div class="ex-note">Soleus focus</div></td><td class="reps">3 × 15–20</td><td class="rest">45s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 03</span>
+          <span class="day-tag">Wed</span>
+          <h3 class="day-title">Shoulders + Biceps × Triceps</h3>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">01</td><td><div class="ex-name">Seated Dumbbell Shoulder Press</div><div class="ex-note">Prime shoulder lift</div></td><td class="reps">4 × 6–8</td><td class="rest">2m</td></tr>
+          </tbody>
+        </table>
+        <div class="superset">
+          <span class="superset-label">Superset A · rest 90s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">2a</td><td><div class="ex-name">Barbell Curl</div><div class="ex-note">Elbows pinned</div></td><td class="reps">4 × 8–10</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">2b</td><td><div class="ex-name">Cable Tricep Pushdown</div><div class="ex-note">Full extension</div></td><td class="reps">4 × 8–10</td><td class="rest">90s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset B · rest 60s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">3a</td><td><div class="ex-name">Dumbbell Lateral Raise</div><div class="ex-note">Slight forward lean</div></td><td class="reps">3 × 12–15</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">3b</td><td><div class="ex-name">Face Pull (rope)</div><div class="ex-note">Rear delts + cuff</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset C · rest 60s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">4a</td><td><div class="ex-name">Preacher Curl (EZ-bar)</div><div class="ex-note">Slow eccentric</div></td><td class="reps">3 × 10–12</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">4b</td><td><div class="ex-name">Rope Overhead Tricep Extension</div><div class="ex-note">Long head stretch</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 04</span>
+          <span class="day-tag">Thu</span>
+          <h3 class="day-title">Chest × Back + Core (variation)</h3>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset A · rest 2–3m between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">1a</td><td><div class="ex-name">Incline Barbell Bench Press</div><div class="ex-note">Upper chest bias</div></td><td class="reps">4 × 6–8</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">1b</td><td><div class="ex-name">Weighted Pull-up (or Lat Pulldown)</div><div class="ex-note">Full ROM</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset B · rest 90s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">2a</td><td><div class="ex-name">Dips (chest lean)</div><div class="ex-note">Add weight if bodyweight is easy</div></td><td class="reps">3 × 8–10</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">2b</td><td><div class="ex-name">Seated Cable Row (V-handle)</div><div class="ex-note">Squeeze scaps</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset C · rest 60s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">3a</td><td><div class="ex-name">Machine Chest Press</div><div class="ex-note">Metabolic finisher</div></td><td class="reps">3 × 10–12</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">3b</td><td><div class="ex-name">Reverse Fly (DB or machine)</div><div class="ex-note">Rear delts included</div></td><td class="reps">3 × 10–12</td><td class="rest">60s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <table class="ex-table">
+          <tbody>
+            <tr><td class="ex-num">04</td><td><div class="ex-name">Cable Crunch</div><div class="ex-note">Full flexion, controlled</div></td><td class="reps">3 × 15–20</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">05</td><td><div class="ex-name">Russian Twist (weighted)</div><div class="ex-note">Feet off ground</div></td><td class="reps">3 × 20 total</td><td class="rest">60s</td></tr>
+            <tr><td class="ex-num">06</td><td><div class="ex-name">Ab Wheel Rollout</div><div class="ex-note">No lower back arch</div></td><td class="reps">3 × 8–12</td><td class="rest">60s</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="day-card">
+        <div class="day-header">
+          <span class="day-marker">Day 05</span>
+          <span class="day-tag">Sat</span>
+          <h3 class="day-title">Upper Compound: Chest × Back + Arms</h3>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset A · rest 2–3m between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">1a</td><td><div class="ex-name">Incline Barbell Bench Press</div><div class="ex-note">Same as strength day</div></td><td class="reps">4 × 6–8</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">1b</td><td><div class="ex-name">Chin-up (supinated)</div><div class="ex-note">Full ROM, dead hang</div></td><td class="reps">4 × 6–8</td><td class="rest">2–3m</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset B · rest 90s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">2a</td><td><div class="ex-name">Dumbbell Bench Press (flat)</div><div class="ex-note">Deeper ROM than barbell</div></td><td class="reps">3 × 8–10</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">2b</td><td><div class="ex-name">T-Bar Row</div><div class="ex-note">Torso ~45°</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset C · rest 90s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">3a</td><td><div class="ex-name">Barbell Curl</div><div class="ex-note">Strict form</div></td><td class="reps">3 × 8–10</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">3b</td><td><div class="ex-name">Close-Grip Bench Press</div><div class="ex-note">Elbows tucked</div></td><td class="reps">3 × 8–10</td><td class="rest">90s</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="superset">
+          <span class="superset-label">Superset D · rest 60s between rounds</span>
+          <table class="ex-table">
+            <tbody>
+              <tr><td class="ex-num">4a</td><td><div class="ex-name">Hammer Curl (DB)</div><div class="ex-note">Brachialis focus</div></td><td class="reps">3 × 10–12</td><td class="rest">—</td></tr>
+              <tr><td class="ex-num">4b</td><td><div class="ex-name">Rope Tricep Extension</div><div class="ex-note">Full spread at bottom</div></td><td class="reps">3 × 12–15</td><td class="rest">60s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="split-notes">
+      <h4>Progression Rules</h4>
+      <ul>
+        <li><strong>Compounds:</strong> add 2.5 kg once you hit the top of the rep range on all sets with clean form.</li>
+        <li><strong>Isolations:</strong> add reps first, then weight.</li>
+        <li><strong>Superset pacing:</strong> if your rep drop-off between A and B is huge (&gt;3 reps), rest 30s between them instead of 15s.</li>
+      </ul>
+    </div>
+
+    <div class="split-notes">
+      <h4>Cut-Phase Notes</h4>
+      <ul>
+        <li>Highest metabolic demand of the three splits — best if you also want the "cardio" effect baked into lifting.</li>
+        <li>Day 4 chest/back feels like a repeat of Day 1 by design — different angles and rep tempo drive extra hypertrophy stimulus.</li>
+        <li>Skip separate cardio days entirely on this split. The supersets are the conditioning.</li>
+        <li>If heart rate spikes too high mid-superset (can't finish exercise B cleanly), extend rest between A and B — never sacrifice compound quality.</li>
+      </ul>
+    </div>
+  </section>
+
+  </main>
+
+  <footer>
+    Built for iterative execution · Progressive overload &gt; perfection
+  </footer>
+
+</div>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const splits = document.querySelectorAll('.split');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.target;
+      tabs.forEach(t => t.classList.remove('active'));
+      splits.forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(target).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
