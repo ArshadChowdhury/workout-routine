@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cut / Menu · Daily Nutrition Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171B;
+    --panel: #1C2026;
+    --panel-2: #23272E;
+    --border: rgba(237, 232, 220, 0.08);
+    --border-strong: rgba(237, 232, 220, 0.16);
+    --ink: #EDE8DC;
+    --ink-dim: #B8B4A9;
+    --muted: #7A7F86;
+    --accent: #E5B234;
+    --accent-dim: rgba(229, 178, 52, 0.12);
+    --rest-bg: rgba(237, 232, 220, 0.03);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* TOP NAV */
+  .top-nav {
+    display: flex; gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .top-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+  }
+  .top-nav a:hover { color: var(--ink); }
+  .top-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* HERO */
+  .hero { padding: 24px 0 44px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-meta::before {
+    content: ""; display: inline-block;
+    width: 24px; height: 1px; background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(56px, 10vw, 108px);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .hero-title .accent { color: var(--accent); font-style: italic; }
+  .hero-sub {
+    margin-top: 24px;
+    color: var(--ink-dim);
+    font-size: 15px;
+    max-width: 620px;
+    line-height: 1.65;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+  }
+  .section-label .count { color: var(--accent); font-weight: 500; text-align: right; }
+
+  /* TARGET GRID */
+  .targets { margin-bottom: 40px; }
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .target-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 22px 18px;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .target-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .target-num .unit {
+    font-size: 22px;
+    opacity: 0.7;
+    font-style: normal;
+    margin-left: 2px;
+  }
+  .target-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* PREP NOTE */
+  .warmup-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    padding: 14px 20px;
+    border: 1px dashed var(--border-strong);
+    border-radius: 2px;
+    margin-bottom: 40px;
+    line-height: 1.7;
+  }
+  .warmup-note strong {
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-right: 8px;
+  }
+
+  /* MEAL CARDS */
+  .days { display: flex; flex-direction: column; gap: 24px; margin-bottom: 48px; }
+  .day-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 28px 28px 20px;
+    border-radius: 2px;
+  }
+  .day-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 20px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .day-marker {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: var(--accent);
+    text-transform: uppercase;
+    line-height: 1;
+    font-style: italic;
+  }
+  .day-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: 2px;
+  }
+  .meal-stats {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* FOOD TABLE */
+  .ex-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .ex-table tr { border-bottom: 1px solid var(--border); }
+  .ex-table tr:last-child { border-bottom: none; }
+  .ex-table td { padding: 14px 8px 14px 0; vertical-align: top; }
+  .ex-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    width: 36px;
+    padding-top: 16px;
+  }
+  .ex-name {
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+    font-size: 14.5px;
+  }
+  .ex-name .amt {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 13px;
+    margin-left: 6px;
+  }
+  .ex-note {
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    line-height: 1.5;
+    font-style: italic;
+  }
+  td.kcal, td.prot {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    white-space: nowrap;
+    text-align: right;
+    padding-left: 12px;
+    padding-top: 16px;
+    font-weight: 500;
+  }
+  td.kcal { color: var(--ink-dim); }
+  td.prot { color: var(--accent); font-weight: 600; }
+
+  /* PROTEIN BANK TABLE */
+  .rank-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .rank-table th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 12px 12px 0;
+    border-bottom: 1px solid var(--border-strong);
+    font-weight: 500;
+  }
+  .rank-table td {
+    padding: 16px 12px 16px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    vertical-align: middle;
+  }
+  .rank-table td.rank {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    color: var(--accent);
+    width: 50px;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+    font-style: italic;
+  }
+  .rank-table td.protein-num {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-size: 13px;
+    white-space: nowrap;
+    width: 130px;
+  }
+  .rank-table td.note { color: var(--ink-dim); font-size: 13px; }
+
+  /* NOTES */
+  .split-notes {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+  .split-notes h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .split-notes ul { list-style: none; padding: 0; }
+  .split-notes li {
+    padding: 10px 0 10px 24px;
+    color: var(--ink-dim);
+    position: relative;
+    font-size: 14px;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--border);
+  }
+  .split-notes li:last-child { border-bottom: none; }
+  .split-notes li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .split-notes li strong { color: var(--ink); font-weight: 600; }
+
+  /* FOOTER */
+  footer {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .container { padding: 24px 16px 60px; }
+    .target-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .target-num { font-size: 36px; }
+    .target-num .unit { font-size: 18px; }
+    .day-card { padding: 20px 18px 14px; }
+    .day-marker { font-size: 24px; }
+    .meal-stats { margin-left: 0; width: 100%; text-align: center; }
+    .ex-name { font-size: 14px; }
+    .ex-note { font-size: 11.5px; }
+    td.kcal, td.prot { font-size: 12px; padding-left: 8px; }
+    .ex-num { width: 28px; font-size: 10px; }
+    .split-notes { padding: 20px; }
+    .rank-table td.note { font-size: 12px; }
+    .rank-table td.protein-num { width: auto; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <nav class="top-nav">
+    <a href="index.html">Training</a>
+    <a href="nutrition.html" class="active">Nutrition</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-meta">Nutrition · daily template</div>
+    <h1 class="hero-title">Cut /<br><span class="accent">Menu</span></h1>
+    <p class="hero-sub">A 5-meal daily template hitting ~1,900 kcal and ~140g protein — protein calibrated to lean body mass (~70 kg), not total weight, so the deficit doesn't waste calories on protein the body can't use. Built around Bangladesh staples.</p>
+  </header>
+
+  <!-- DAILY TARGETS -->
+  <div class="targets">
+    <div class="section-label"><span>Daily Targets</span><span class="count">Aggressive cut</span></div>
+    <div class="target-grid">
+      <div class="target-card">
+        <div class="target-num">1,900</div>
+        <div class="target-label">kcal / day</div>
+      </div>
+      <div class="target-card">
+        <div class="target-num">140<span class="unit">g</span></div>
+        <div class="target-label">protein / day</div>
+      </div>
+      <div class="target-card">
+        <div class="target-num">5</div>
+        <div class="target-label">meals / day</div>
+      </div>
+      <div class="target-card">
+        <div class="target-num">3<span class="unit">L</span></div>
+        <div class="target-label">water / day</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warmup-note">
+    <strong>Prep rhythm</strong> Batch-cook chicken breast Sunday and Wednesday in the air fryer (~500 g per session is plenty at this protein target). Boil eggs 6 at a time. Cook rice fresh every 2 days. Keep chopped onion/tomato/cucumber ready in the fridge — most meals lean on them.
+  </div>
+
+  <!-- MEALS -->
+  <div class="section-label"><span>Daily Meals</span><span class="count">~1,885 kcal · ~142g protein</span></div>
+  <div class="days">
+
+    <!-- MEAL 1 -->
+    <article class="day-card">
+      <div class="day-header">
+        <span class="day-marker">Meal 01</span>
+        <span class="day-tag">7–9 AM · Breakfast</span>
+        <span class="meal-stats">490 kcal · 29g P</span>
+      </div>
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-num">01</td>
+            <td>
+              <div class="ex-name">Whole Eggs <span class="amt">× 3</span></div>
+              <div class="ex-note">Scrambled or omelet with 1 tsp oil; add chopped tomato, onion, green chili</div>
+            </td>
+            <td class="kcal">210 kcal</td>
+            <td class="prot">18 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">02</td>
+            <td>
+              <div class="ex-name">Milk <span class="amt">200 ml</span></div>
+              <div class="ex-note">Prefer low-fat pack milk if the calorie budget is tight; otherwise regular is fine</div>
+            </td>
+            <td class="kcal">100 kcal</td>
+            <td class="prot">7 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">03</td>
+            <td>
+              <div class="ex-name">Chapati (small) <span class="amt">× 1</span></div>
+              <div class="ex-note">Atta chapati, no ghee — replaces the extra egg for calorie balance without extra protein</div>
+            </td>
+            <td class="kcal">90 kcal</td>
+            <td class="prot">3 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">04</td>
+            <td>
+              <div class="ex-name">Fruit <span class="amt">1 small</span></div>
+              <div class="ex-note">Banana, apple, or guava — whatever is in season and cheap</div>
+            </td>
+            <td class="kcal">90 kcal</td>
+            <td class="prot">1 g</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <!-- MEAL 2 -->
+    <article class="day-card">
+      <div class="day-header">
+        <span class="day-marker">Meal 02</span>
+        <span class="day-tag">11 AM · Mid-morning · Yogurt 1</span>
+        <span class="meal-stats">250 kcal · 15g P</span>
+      </div>
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-num">01</td>
+            <td>
+              <div class="ex-name">Plain Yogurt (Tok Doi) <span class="amt">250 g</span></div>
+              <div class="ex-note">Plain / sour yogurt only — misti doi is loaded with sugar and blows the calorie plan</div>
+            </td>
+            <td class="kcal">150 kcal</td>
+            <td class="prot">9 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">02</td>
+            <td>
+              <div class="ex-name">Roasted Chana <span class="amt">30 g</span></div>
+              <div class="ex-note">One decent handful; adds crunch, protein, and staying power</div>
+            </td>
+            <td class="kcal">100 kcal</td>
+            <td class="prot">6 g</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <!-- MEAL 3 -->
+    <article class="day-card">
+      <div class="day-header">
+        <span class="day-marker">Meal 03</span>
+        <span class="day-tag">1–2 PM · Lunch</span>
+        <span class="meal-stats">475 kcal · 44g P</span>
+      </div>
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-num">01</td>
+            <td>
+              <div class="ex-name">Chicken Breast <span class="amt">100 g cooked</span></div>
+              <div class="ex-note">Air-fried from the batch prep; season with turmeric, chili, salt, garlic paste</div>
+            </td>
+            <td class="kcal">165 kcal</td>
+            <td class="prot">31 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">02</td>
+            <td>
+              <div class="ex-name">Cooked Rice <span class="amt">130 g</span></div>
+              <div class="ex-note">Slightly bigger portion here (~1 cup cooked) to make up the calories from less chicken</div>
+            </td>
+            <td class="kcal">170 kcal</td>
+            <td class="prot">4 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">03</td>
+            <td>
+              <div class="ex-name">Dal <span class="amt">½ bowl</span></div>
+              <div class="ex-note">Mushur or moong; cook thin with minimal oil</div>
+            </td>
+            <td class="kcal">100 kcal</td>
+            <td class="prot">7 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">04</td>
+            <td>
+              <div class="ex-name">Salad + Veg <span class="amt">1 bowl</span></div>
+              <div class="ex-note">Cucumber, tomato, onion, green chili, lemon — no dressing</div>
+            </td>
+            <td class="kcal">40 kcal</td>
+            <td class="prot">2 g</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <!-- MEAL 4 -->
+    <article class="day-card">
+      <div class="day-header">
+        <span class="day-marker">Meal 04</span>
+        <span class="day-tag">5 PM · Afternoon · Yogurt 2</span>
+        <span class="meal-stats">270 kcal · 13g P</span>
+      </div>
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-num">01</td>
+            <td>
+              <div class="ex-name">Plain Yogurt (Tok Doi) <span class="amt">250 g</span></div>
+              <div class="ex-note">Same rule — plain, not sweetened</div>
+            </td>
+            <td class="kcal">150 kcal</td>
+            <td class="prot">9 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">02</td>
+            <td>
+              <div class="ex-name">Mixed Nuts <span class="amt">20 g</span></div>
+              <div class="ex-note">Almonds, walnuts, or peanuts — adds healthy fats and satiety between lunch and dinner</div>
+            </td>
+            <td class="kcal">120 kcal</td>
+            <td class="prot">4 g</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <!-- MEAL 5 -->
+    <article class="day-card">
+      <div class="day-header">
+        <span class="day-marker">Meal 05</span>
+        <span class="day-tag">8–9 PM · Dinner</span>
+        <span class="meal-stats">400 kcal · 41g P</span>
+      </div>
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-num">01</td>
+            <td>
+              <div class="ex-name">Fish or Chicken <span class="amt">100 g chicken / 130 g fish</span></div>
+              <div class="ex-note">Rotate: rui, tilapia, pangash, or air-fried chicken. Small fish like taki/punti work great and are cheaper</div>
+            </td>
+            <td class="kcal">165 kcal</td>
+            <td class="prot">31 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">02</td>
+            <td>
+              <div class="ex-name">Chapati or Rice <span class="amt">1 small chapati / ½ cup rice</span></div>
+              <div class="ex-note">Chapati is the leaner option; go rice if the training day was heavy</div>
+            </td>
+            <td class="kcal">90 kcal</td>
+            <td class="prot">3 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">03</td>
+            <td>
+              <div class="ex-name">Vegetables (Bhaji / Mixed Veg) <span class="amt">1 bowl</span></div>
+              <div class="ex-note">Any seasonal veg — spinach, lauki, beans, cabbage. Minimal oil</div>
+            </td>
+            <td class="kcal">80 kcal</td>
+            <td class="prot">3 g</td>
+          </tr>
+          <tr>
+            <td class="ex-num">04</td>
+            <td>
+              <div class="ex-name">Small Dal <span class="amt">½ bowl</span></div>
+              <div class="ex-note">Optional but recommended — adds satiety, keeps evening cravings down</div>
+            </td>
+            <td class="kcal">65 kcal</td>
+            <td class="prot">4 g</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+  </div>
+
+  <!-- PROTEIN BANK -->
+  <div class="section-label"><span>Protein Bank · Bangladesh</span><span class="count">Ranked by value</span></div>
+  <div class="day-card" style="margin-bottom: 40px;">
+    <table class="rank-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Source</th>
+          <th>Protein</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="rank">01</td><td>Soya Chunks</td><td class="protein-num">52 g / 100 g dry</td><td class="note">Cheapest protein per taka — great chicken substitute in curries</td></tr>
+        <tr><td class="rank">02</td><td>Eggs</td><td class="protein-num">6 g each</td><td class="note">Best all-rounder; complete protein and universally available</td></tr>
+        <tr><td class="rank">03</td><td>Dal (Mushur, Moong)</td><td class="protein-num">9 g / 100 g cooked</td><td class="note">Carbs + protein combo; anchors most South Asian meals</td></tr>
+        <tr><td class="rank">04</td><td>Broiler Chicken Breast</td><td class="protein-num">31 g / 100 g cooked</td><td class="note">The workhorse — batch-cook 2× per week in the air fryer</td></tr>
+        <tr><td class="rank">05</td><td>Small Fish (Taki, Punti, Tilapia)</td><td class="protein-num">18–20 g / 100 g</td><td class="note">Cheaper than rui/katla; rotate for variety and omega-3s</td></tr>
+        <tr><td class="rank">06</td><td>Rui / Katla</td><td class="protein-num">22 g / 100 g</td><td class="note">More expensive; use 1–2× per week for variety</td></tr>
+        <tr><td class="rank">07</td><td>Plain Yogurt (Tok Doi)</td><td class="protein-num">9 g / 250 g</td><td class="note">Between-meal anchor; buy in 1 kg tubs for cost efficiency</td></tr>
+        <tr><td class="rank">08</td><td>Milk</td><td class="protein-num">7 g / 200 ml</td><td class="note">Prefer low-fat if calorie budget is tight</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NOTES -->
+  <div class="split-notes">
+    <h4>Why 140g Protein, Not 170g</h4>
+    <ul>
+      <li><strong>Protein needs scale with lean mass, not total weight.</strong> Fat mass doesn't need feeding — muscle does. Calculating on estimated LBM (~70 kg) instead of scale weight (91 kg) gives a more accurate target.</li>
+      <li><strong>2 g per kg LBM = 140 g/day</strong> — within the well-established muscle-preservation range for cutting athletes. Enough to protect muscle, without wasting calories on excess.</li>
+      <li><strong>As you lean out and LBM changes, recalculate.</strong> If you drop fat and gain back muscle, LBM might climb toward 72–75 kg; nudge protein up to 145–150 g at that point.</li>
+    </ul>
+  </div>
+
+  <div class="split-notes">
+    <h4>Prep Tips</h4>
+    <ul>
+      <li><strong>Air-fry chicken in bulk:</strong> ~500g twice a week is enough at this protein target — Sunday and Wednesday work well.</li>
+      <li><strong>Boil 6 eggs at once</strong> and keep them in the fridge for quick breakfast prep.</li>
+      <li><strong>Yogurt in 1kg tubs</strong> is dramatically cheaper than small cups. Portion into two 250 g servings per day.</li>
+      <li><strong>Weigh rice cooked, not raw.</strong> 130g cooked ≈ 40g raw. Rice is the biggest source of accidental calories.</li>
+      <li><strong>Cook with 1–2 tsp oil per meal, max.</strong> Use mustard or sunflower oil sparingly; skip ghee during the cut.</li>
+    </ul>
+  </div>
+
+  <div class="split-notes">
+    <h4>Swaps & Substitutions</h4>
+    <ul>
+      <li><strong>Chicken → Soya chunks</strong> — same protein at 30% of the cost. Cook 40 g dry (rehydrates to ~120 g) in a light gravy.</li>
+      <li><strong>Meal 4 nuts → 1 boiled egg</strong> — if you'd rather trade fat for extra protein (adds ~6 g P, saves ~50 kcal).</li>
+      <li><strong>Rui → Small fish (taki, punti, tilapia)</strong> — cheaper, similar protein, more variety.</li>
+      <li><strong>Rice → Chapati</strong> for dinner — slightly lower calories, higher protein per gram.</li>
+      <li><strong>Milk → Soya milk</strong> if you're lactose sensitive; similar protein without the fat.</li>
+      <li><strong>No time to cook?</strong> Meal 2 or 4 can flex to just 300 g yogurt + a fruit.</li>
+    </ul>
+  </div>
+
+  <div class="split-notes">
+    <h4>Cut-Phase Notes</h4>
+    <ul>
+      <li><strong>Consistency &gt; perfection.</strong> Hitting 130 g protein reliably every day beats 150 g four days and 90 g on the other three.</li>
+      <li><strong>Weigh yourself once a week</strong>, same day, same time (morning, post-toilet, before eating). Look at the trend across 3 weeks — not daily fluctuations.</li>
+      <li><strong>Cheat meals:</strong> 1 non-tracked meal per week is fine. Not a cheat day — a cheat meal. Get back on the plan the next meal.</li>
+      <li><strong>Pre-workout:</strong> Meal 4 (yogurt + nuts) 1–2 hours before training works well. Or black coffee + a banana 30 min before if you train early.</li>
+      <li><strong>Post-workout:</strong> The next scheduled meal is enough. Whey protein is optional, not essential — save the money if the budget is tight.</li>
+      <li><strong>No zero-calorie drinks with meals</strong> (colas, sweetened tea). Water, black coffee, plain tea only. Zero-sugar sodas okay if you must.</li>
+    </ul>
+  </div>
+
+  <footer>
+    Nutrition template · Track for 2 weeks, adjust, repeat
+  </footer>
+
+</div>
+
+</body>
+</html>

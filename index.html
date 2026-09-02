@@ -34,6 +34,24 @@
   }
   .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
 
+  /* TOP NAV */
+  .top-nav {
+    display: flex; gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .top-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+  }
+  .top-nav a:hover { color: var(--ink); }
+  .top-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
   /* HERO */
   .hero { padding: 24px 0 44px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
   .hero-meta {
@@ -299,6 +317,12 @@
 <body>
 
 <div class="container">
+
+  <nav class="top-nav">
+    <a href="index.html" class="active">Training</a>
+    <a href="nutrition.html">Nutrition</a>
+  </nav>
+
 
   <header class="hero">
     <div class="hero-meta">Training block · 4 days/week</div>
