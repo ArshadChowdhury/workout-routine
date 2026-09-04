@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily / Log · Steps + Weight Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #14171B;
+    --panel: #1C2026;
+    --panel-2: #23272E;
+    --border: rgba(237, 232, 220, 0.08);
+    --border-strong: rgba(237, 232, 220, 0.16);
+    --ink: #EDE8DC;
+    --ink-dim: #B8B4A9;
+    --muted: #7A7F86;
+    --accent: #E5B234;
+    --accent-dim: rgba(229, 178, 52, 0.12);
+    --cool: #A0A3AA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  .container { max-width: 960px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* TOP NAV */
+  .top-nav {
+    display: flex; gap: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .top-nav a {
+    color: var(--muted);
+    text-decoration: none;
+    padding-bottom: 4px;
+    border-bottom: 1px solid transparent;
+  }
+  .top-nav a:hover { color: var(--ink); }
+  .top-nav a.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* HERO */
+  .hero { padding: 24px 0 44px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+  .hero-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-meta::before {
+    content: ""; display: inline-block;
+    width: 24px; height: 1px; background: var(--accent);
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: clamp(56px, 10vw, 108px);
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+  .hero-title .accent { color: var(--accent); font-style: italic; }
+  .hero-sub {
+    margin-top: 24px;
+    color: var(--ink-dim);
+    font-size: 15px;
+    max-width: 620px;
+    line-height: 1.65;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px;
+  }
+  .section-label .count { color: var(--accent); font-weight: 500; text-align: right; }
+
+  /* SNAPSHOT GRID */
+  .targets { margin-bottom: 40px; }
+  .target-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .target-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 22px 18px;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .target-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 40px;
+    line-height: 1;
+    color: var(--accent);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .target-num .unit {
+    font-size: 20px;
+    opacity: 0.7;
+    font-style: normal;
+    margin-left: 2px;
+  }
+  .target-num.neutral { color: var(--cool); }
+  .target-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  /* TRACKER CARD */
+  .day-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: 2px;
+    margin-bottom: 40px;
+  }
+
+  /* INPUT ROW */
+  .input-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .input-row input {
+    background: var(--panel-2);
+    border: 1px solid var(--border-strong);
+    color: var(--ink);
+    padding: 12px 14px;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .input-row input:focus { border-color: var(--accent); }
+  .input-row input::placeholder { color: var(--muted); }
+  .input-row input[type="date"] { min-width: 150px; color-scheme: dark; }
+  .input-row input[type="number"] { flex: 1; min-width: 130px; }
+  .btn {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 2px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.88; }
+  .btn:active { transform: translateY(1px); }
+
+  /* GOAL ROW */
+  .goal-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .goal-row input {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--accent);
+    padding: 5px 10px;
+    font-family: inherit;
+    font-size: 11px;
+    width: 80px;
+    border-radius: 2px;
+    outline: none;
+  }
+  .goal-row button {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--muted);
+    padding: 5px 12px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+  .goal-row button:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* CHART */
+  .chart-wrap {
+    position: relative;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    min-height: 260px;
+  }
+  .chart {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .chart-empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-align: center;
+    line-height: 1.7;
+  }
+
+  /* HISTORY */
+  .history-wrap {
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .history-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .history-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .history-table th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px 8px 10px 0;
+    border-bottom: 1px solid var(--border-strong);
+    font-weight: 500;
+  }
+  .history-table td {
+    padding: 12px 8px 12px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+  }
+  .history-table tr:last-child td { border-bottom: none; }
+  .history-table td.date-cell { color: var(--accent); }
+  .history-table td.delta-down { color: var(--accent); }
+  .history-table td.delta-up { color: var(--cool); }
+  .history-table td.right { text-align: right; }
+  .history-table td.check { color: var(--accent); }
+  .history-table td.no-check { color: var(--muted); }
+  .delete-btn {
+    background: transparent;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    transition: color 0.15s;
+    line-height: 1;
+  }
+  .delete-btn:hover { color: #C94A3A; }
+
+  /* NOTES */
+  .split-notes {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    padding: 28px;
+    border-radius: 2px;
+    margin-bottom: 24px;
+  }
+  .split-notes h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .split-notes ul { list-style: none; padding: 0; }
+  .split-notes li {
+    padding: 10px 0 10px 24px;
+    color: var(--ink-dim);
+    position: relative;
+    font-size: 14px;
+    line-height: 1.6;
+    border-bottom: 1px solid var(--border);
+  }
+  .split-notes li:last-child { border-bottom: none; }
+  .split-notes li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .split-notes li strong { color: var(--ink); font-weight: 600; }
+
+  .danger-btn {
+    background: transparent;
+    border: 1px solid rgba(201, 74, 58, 0.4);
+    color: #C94A3A;
+    padding: 8px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    margin-top: 8px;
+  }
+  .danger-btn:hover { background: rgba(201, 74, 58, 0.08); }
+
+  /* FOOTER */
+  footer {
+    margin-top: 72px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 720px) {
+    .container { padding: 24px 16px 60px; }
+    .target-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .target-num { font-size: 32px; }
+    .target-num .unit { font-size: 16px; }
+    .day-card { padding: 20px 18px; }
+    .input-row { flex-direction: column; }
+    .input-row input, .btn { width: 100%; }
+    .split-notes { padding: 20px; }
+    .history-table td, .history-table th { font-size: 11.5px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <nav class="top-nav">
+    <a href="index.html">Training</a>
+    <a href="nutrition.html">Nutrition</a>
+    <a href="log.html" class="active">Log</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-meta">Progress · daily log</div>
+    <h1 class="hero-title">Daily /<br><span class="accent">Log</span></h1>
+    <p class="hero-sub">Steps daily, weight weekly. A private ledger for the trend line that matters. Sits alongside the training block and nutrition plan — this is where the numbers show whether the plan is working.</p>
+  </header>
+
+  <!-- SNAPSHOT -->
+  <div class="targets">
+    <div class="section-label"><span>Snapshot</span><span class="count" id="snapshot-date">—</span></div>
+    <div class="target-grid">
+      <div class="target-card">
+        <div class="target-num" id="today-steps">—</div>
+        <div class="target-label">Today's Steps</div>
+      </div>
+      <div class="target-card">
+        <div class="target-num" id="week-avg-steps">—</div>
+        <div class="target-label">7-day Avg Steps</div>
+      </div>
+      <div class="target-card">
+        <div class="target-num" id="latest-weight">—</div>
+        <div class="target-label">Latest Weight</div>
+      </div>
+      <div class="target-card">
+        <div class="target-num neutral" id="weight-change">—</div>
+        <div class="target-label">Δ 2-week</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEPS SECTION -->
+  <div class="section-label"><span>Steps</span><span class="count">Log daily</span></div>
+  <article class="day-card">
+    <div class="input-row">
+      <input type="date" id="steps-date">
+      <input type="number" id="steps-input" placeholder="Steps today" min="0" max="99999">
+      <button onclick="addSteps()" class="btn">Add / Update</button>
+    </div>
+    <div class="goal-row">
+      <span>Goal:</span>
+      <input type="number" id="goal-input" min="1000" max="50000" step="500">
+      <button onclick="updateGoal()">Set</button>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-empty" id="steps-empty">No data yet.<br>Add your first entry above.</div>
+      <svg id="steps-chart" class="chart" viewBox="0 0 700 240" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="history-wrap">
+      <div class="history-label">Recent · Last 10 entries</div>
+      <table class="history-table" id="steps-history"></table>
+    </div>
+  </article>
+
+  <!-- WEIGHT SECTION -->
+  <div class="section-label"><span>Weight</span><span class="count">Weekly · same day, same time</span></div>
+  <article class="day-card">
+    <div class="input-row">
+      <input type="date" id="weight-date">
+      <input type="number" step="0.1" id="weight-input" placeholder="Weight (kg)" min="30" max="200">
+      <button onclick="addWeight()" class="btn">Add / Update</button>
+    </div>
+
+    <div class="chart-wrap">
+      <div class="chart-empty" id="weight-empty">No data yet.<br>Log your first weight above.</div>
+      <svg id="weight-chart" class="chart" viewBox="0 0 700 240" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div class="history-wrap">
+      <div class="history-label">Recent · Last 10 entries</div>
+      <table class="history-table" id="weight-history"></table>
+    </div>
+  </article>
+
+  <!-- NOTES -->
+  <div class="split-notes">
+    <h4>Tracking Rhythm</h4>
+    <ul>
+      <li><strong>Steps: daily.</strong> Log at the end of the day when the count is final. Missing a day breaks the streak visualization but doesn't break the plan.</li>
+      <li><strong>Weight: weekly.</strong> Same day, same time — morning, post-toilet, before eating. Daily fluctuations mean nothing; the 3-week trend does.</li>
+      <li><strong>Don't chase perfect numbers.</strong> A "bad" step day or a weight blip means nothing on its own. Only patterns across 3+ weeks are worth acting on.</li>
+      <li><strong>When the trend stalls for 3 weeks straight,</strong> that's the signal to adjust — usually a small step goal bump or a 100–150 kcal calorie drop, not a full plan overhaul.</li>
+    </ul>
+  </div>
+
+  <div class="split-notes">
+    <h4>Data & Reset</h4>
+    <ul>
+      <li>All data is stored locally in this browser — no account, no cloud sync. Open it from the same browser and device each time.</li>
+      <li>To edit an entry, add a new one for the same date — it overwrites. Click the × next to any row to delete.</li>
+      <li><button onclick="resetAll()" class="danger-btn">Clear All Data</button></li>
+    </ul>
+  </div>
+
+  <footer>
+    Daily log · The trend line beats the daily line
+  </footer>
+
+</div>
+
+<script>
+  // Storage shim: use window.storage if the host provides it, otherwise fall back to localStorage.
+  if (!window.storage) {
+    window.storage = {
+      get: async (key) => {
+        const value = localStorage.getItem(key);
+        return value === null ? null : { key, value };
+      },
+      set: async (key, value) => {
+        localStorage.setItem(key, value);
+        return { key, value };
+      }
+    };
+  }
+
+  const S = {
+    data: { steps: {}, weight: {}, stepGoal: 8000 },
+    STORAGE_KEY: 'tracker-data'
+  };
+
+  const $ = id => document.getElementById(id);
+
+  function todayISO() {
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  }
+
+  function formatDate(iso) {
+    const [y, m, d] = iso.split('-');
+    const date = new Date(Number(y), Number(m) - 1, Number(d));
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  }
+
+  function formatNumber(n) {
+    return Math.round(n).toLocaleString();
+  }
+
+  async function loadData() {
+    try {
+      const result = await window.storage.get(S.STORAGE_KEY);
+      if (result && result.value) {
+        const parsed = JSON.parse(result.value);
+        S.data = {
+          steps: parsed.steps || {},
+          weight: parsed.weight || {},
+          stepGoal: parsed.stepGoal || 8000
+        };
+      }
+    } catch (e) {
+      // No data yet — normal on first load
+    }
+    $('goal-input').value = S.data.stepGoal;
+    render();
+  }
+
+  async function saveData() {
+    try {
+      await window.storage.set(S.STORAGE_KEY, JSON.stringify(S.data));
+    } catch (e) {
+      console.error('Save failed:', e);
+      alert('Could not save. Refresh and try again.');
+    }
+  }
+
+  async function addSteps() {
+    const date = $('steps-date').value;
+    const steps = parseInt($('steps-input').value);
+    if (!date || isNaN(steps) || steps < 0) {
+      alert('Enter a valid date and step count');
+      return;
+    }
+    S.data.steps[date] = steps;
+    await saveData();
+    $('steps-input').value = '';
+    render();
+  }
+
+  async function addWeight() {
+    const date = $('weight-date').value;
+    const weight = parseFloat($('weight-input').value);
+    if (!date || isNaN(weight) || weight <= 0 || weight > 300) {
+      alert('Enter a valid date and weight');
+      return;
+    }
+    S.data.weight[date] = weight;
+    await saveData();
+    $('weight-input').value = '';
+    render();
+  }
+
+  async function updateGoal() {
+    const goal = parseInt($('goal-input').value);
+    if (isNaN(goal) || goal < 1000 || goal > 50000) {
+      alert('Goal must be between 1,000 and 50,000');
+      $('goal-input').value = S.data.stepGoal;
+      return;
+    }
+    S.data.stepGoal = goal;
+    await saveData();
+    render();
+  }
+
+  async function deleteSteps(date) {
+    if (!confirm(`Delete step entry for ${formatDate(date)}?`)) return;
+    delete S.data.steps[date];
+    await saveData();
+    render();
+  }
+
+  async function deleteWeight(date) {
+    if (!confirm(`Delete weight entry for ${formatDate(date)}?`)) return;
+    delete S.data.weight[date];
+    await saveData();
+    render();
+  }
+
+  async function resetAll() {
+    if (!confirm('Delete ALL tracked data? This cannot be undone.')) return;
+    S.data = { steps: {}, weight: {}, stepGoal: 8000 };
+    await saveData();
+    $('goal-input').value = 8000;
+    render();
+  }
+
+  function render() {
+    renderSnapshot();
+    renderStepsChart();
+    renderStepsHistory();
+    renderWeightChart();
+    renderWeightHistory();
+  }
+
+  function renderSnapshot() {
+    const today = todayISO();
+    $('snapshot-date').textContent = formatDate(today);
+
+    // Today's steps
+    const todaySteps = S.data.steps[today];
+    $('today-steps').textContent = todaySteps !== undefined ? formatNumber(todaySteps) : '—';
+
+    // 7-day avg (last 7 with data)
+    const stepEntries = Object.entries(S.data.steps).sort();
+    const last7 = stepEntries.slice(-7);
+    if (last7.length > 0) {
+      const avg = last7.reduce((a, [, v]) => a + v, 0) / last7.length;
+      $('week-avg-steps').textContent = formatNumber(avg);
+    } else {
+      $('week-avg-steps').textContent = '—';
+    }
+
+    // Latest weight
+    const weightEntries = Object.entries(S.data.weight).sort();
+    if (weightEntries.length > 0) {
+      const latest = weightEntries[weightEntries.length - 1];
+      $('latest-weight').innerHTML = latest[1].toFixed(1) + '<span class="unit">kg</span>';
+
+      // 2-week change
+      const latestDate = new Date(latest[0]);
+      const twoWeeksAgo = new Date(latestDate);
+      twoWeeksAgo.setDate(twoWeeksAgo.getDate() - 14);
+      const olderEntries = weightEntries.filter(([d]) => new Date(d) <= twoWeeksAgo);
+      if (olderEntries.length > 0) {
+        const older = olderEntries[olderEntries.length - 1];
+        const change = latest[1] - older[1];
+        const sign = change > 0 ? '+' : '';
+        const el = $('weight-change');
+        el.innerHTML = sign + change.toFixed(1) + '<span class="unit">kg</span>';
+        el.className = 'target-num ' + (change < 0 ? '' : 'neutral');
+      } else {
+        $('weight-change').textContent = '—';
+      }
+    } else {
+      $('latest-weight').textContent = '—';
+      $('weight-change').textContent = '—';
+    }
+  }
+
+  function renderStepsChart() {
+    const svg = $('steps-chart');
+    const empty = $('steps-empty');
+    const entries = Object.entries(S.data.steps).sort();
+
+    if (entries.length === 0) {
+      empty.style.display = 'block';
+      svg.innerHTML = '';
+      return;
+    }
+    empty.style.display = 'none';
+
+    const points = entries.slice(-14);
+    const maxVal = Math.max(...points.map(e => e[1]), S.data.stepGoal) * 1.1;
+
+    const W = 700, H = 240;
+    const padL = 50, padR = 20, padT = 20, padB = 40;
+    const chartW = W - padL - padR;
+    const chartH = H - padT - padB;
+
+    let svgContent = '';
+
+    // Y-axis grid + labels
+    const yTicks = 4;
+    for (let i = 0; i <= yTicks; i++) {
+      const val = maxVal * i / yTicks;
+      const y = padT + chartH - (i / yTicks * chartH);
+      svgContent += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="rgba(237,232,220,0.05)" stroke-width="1"/>`;
+      svgContent += `<text x="${padL - 10}" y="${y + 4}" text-anchor="end" fill="#7A7F86" font-family="JetBrains Mono, monospace" font-size="10">${(val / 1000).toFixed(0)}k</text>`;
+    }
+
+    // Goal line
+    const goalY = padT + chartH - (S.data.stepGoal / maxVal * chartH);
+    svgContent += `<line x1="${padL}" y1="${goalY}" x2="${W - padR}" y2="${goalY}" stroke="#E5B234" stroke-width="1" stroke-dasharray="4,4" opacity="0.7"/>`;
+    svgContent += `<text x="${W - padR - 4}" y="${goalY - 6}" text-anchor="end" fill="#E5B234" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">GOAL ${(S.data.stepGoal / 1000).toFixed(0)}K</text>`;
+
+    // Bars
+    const barGap = 4;
+    const barW = Math.max(4, (chartW / points.length) - barGap);
+    points.forEach((point, i) => {
+      const x = padL + i * (chartW / points.length) + (chartW / points.length - barW) / 2;
+      const h = point[1] / maxVal * chartH;
+      const y = padT + chartH - h;
+      const isMet = point[1] >= S.data.stepGoal;
+      const color = isMet ? '#E5B234' : '#4A4F56';
+      svgContent += `<rect x="${x}" y="${y}" width="${barW}" height="${h}" fill="${color}" rx="1"><title>${formatDate(point[0])}: ${formatNumber(point[1])}</title></rect>`;
+
+      // Date labels — show first, last, and middle if space permits
+      const showLabel = points.length <= 7 || i % Math.ceil(points.length / 7) === 0 || i === points.length - 1;
+      if (showLabel) {
+        const dateLabel = point[0].split('-')[2];
+        svgContent += `<text x="${x + barW / 2}" y="${H - 15}" text-anchor="middle" fill="#7A7F86" font-family="JetBrains Mono, monospace" font-size="9">${dateLabel}</text>`;
+      }
+    });
+
+    // X-axis month label
+    if (points.length > 0) {
+      const firstMonth = formatDate(points[0][0]).split(' ')[0];
+      const lastMonth = formatDate(points[points.length - 1][0]).split(' ')[0];
+      const label = firstMonth === lastMonth ? firstMonth : `${firstMonth} → ${lastMonth}`;
+      svgContent += `<text x="${padL + chartW / 2}" y="${H - 2}" text-anchor="middle" fill="#7A7F86" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">${label.toUpperCase()}</text>`;
+    }
+
+    svg.innerHTML = svgContent;
+  }
+
+  function renderWeightChart() {
+    const svg = $('weight-chart');
+    const empty = $('weight-empty');
+    const entries = Object.entries(S.data.weight).sort();
+
+    if (entries.length === 0) {
+      empty.style.display = 'block';
+      svg.innerHTML = '';
+      return;
+    }
+    empty.style.display = 'none';
+
+    const points = entries.slice(-12);
+    const values = points.map(e => e[1]);
+    const range = Math.max(...values) - Math.min(...values);
+    const pad = Math.max(1, range * 0.2);
+    const minVal = Math.min(...values) - pad;
+    const maxVal = Math.max(...values) + pad;
+    const yRange = maxVal - minVal || 1;
+
+    const W = 700, H = 240;
+    const padL = 55, padR = 20, padT = 20, padB = 40;
+    const chartW = W - padL - padR;
+    const chartH = H - padT - padB;
+
+    let svgContent = '';
+
+    // Y-axis grid + labels
+    const yTicks = 4;
+    for (let i = 0; i <= yTicks; i++) {
+      const val = minVal + yRange * (yTicks - i) / yTicks;
+      const y = padT + chartH * i / yTicks;
+      svgContent += `<line x1="${padL}" y1="${y}" x2="${W - padR}" y2="${y}" stroke="rgba(237,232,220,0.05)" stroke-width="1"/>`;
+      svgContent += `<text x="${padL - 10}" y="${y + 4}" text-anchor="end" fill="#7A7F86" font-family="JetBrains Mono, monospace" font-size="10">${val.toFixed(1)}</text>`;
+    }
+
+    // Compute point coordinates
+    const xStep = points.length > 1 ? chartW / (points.length - 1) : 0;
+    const coords = points.map((point, i) => {
+      const x = points.length === 1 ? padL + chartW / 2 : padL + i * xStep;
+      const y = padT + chartH - ((point[1] - minVal) / yRange * chartH);
+      return { x, y, value: point[1], date: point[0] };
+    });
+
+    // Line
+    if (coords.length > 1) {
+      const path = coords.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
+      svgContent += `<path d="${path}" stroke="#E5B234" stroke-width="2" fill="none"/>`;
+
+      // Trend area (light fill under line)
+      const areaPath = `${path} L ${coords[coords.length - 1].x} ${padT + chartH} L ${coords[0].x} ${padT + chartH} Z`;
+      svgContent += `<path d="${areaPath}" fill="url(#areaGradient)" opacity="0.15"/>`;
+      svgContent += `<defs><linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E5B234"/><stop offset="1" stop-color="#E5B234" stop-opacity="0"/></linearGradient></defs>`;
+    }
+
+    // Points
+    coords.forEach((p, i) => {
+      svgContent += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="#14171B" stroke="#E5B234" stroke-width="2"><title>${formatDate(p.date)}: ${p.value.toFixed(1)}kg</title></circle>`;
+
+      // Date labels
+      const showLabel = coords.length <= 6 || i % Math.ceil(coords.length / 6) === 0 || i === coords.length - 1;
+      if (showLabel) {
+        svgContent += `<text x="${p.x}" y="${H - 15}" text-anchor="middle" fill="#7A7F86" font-family="JetBrains Mono, monospace" font-size="9">${formatDate(p.date)}</text>`;
+      }
+    });
+
+    svg.innerHTML = svgContent;
+  }
+
+  function renderStepsHistory() {
+    const table = $('steps-history');
+    const entries = Object.entries(S.data.steps).sort().slice(-10).reverse();
+
+    if (entries.length === 0) {
+      table.innerHTML = '';
+      return;
+    }
+
+    let html = `<thead><tr><th>Date</th><th class="right">Steps</th><th class="right">Goal</th><th></th></tr></thead><tbody>`;
+    entries.forEach(([date, steps]) => {
+      const goalMet = steps >= S.data.stepGoal;
+      html += `<tr>
+        <td class="date-cell">${formatDate(date)}</td>
+        <td class="right">${formatNumber(steps)}</td>
+        <td class="right ${goalMet ? 'check' : 'no-check'}">${goalMet ? '✓' : '—'}</td>
+        <td class="right"><button class="delete-btn" onclick="deleteSteps('${date}')" title="Delete">×</button></td>
+      </tr>`;
+    });
+    html += '</tbody>';
+    table.innerHTML = html;
+  }
+
+  function renderWeightHistory() {
+    const table = $('weight-history');
+    const entries = Object.entries(S.data.weight).sort();
+    const recent = entries.slice(-10).reverse();
+
+    if (recent.length === 0) {
+      table.innerHTML = '';
+      return;
+    }
+
+    let html = `<thead><tr><th>Date</th><th class="right">Weight</th><th class="right">Δ Prev</th><th></th></tr></thead><tbody>`;
+    recent.forEach(([date, weight], i) => {
+      let changeText = '—';
+      let changeClass = '';
+      if (i < recent.length - 1) {
+        const prev = recent[i + 1][1];
+        const change = weight - prev;
+        const sign = change > 0 ? '+' : '';
+        changeText = `${sign}${change.toFixed(1)} kg`;
+        changeClass = change < 0 ? 'delta-down' : (change > 0 ? 'delta-up' : '');
+      }
+      html += `<tr>
+        <td class="date-cell">${formatDate(date)}</td>
+        <td class="right">${weight.toFixed(1)} kg</td>
+        <td class="right ${changeClass}">${changeText}</td>
+        <td class="right"><button class="delete-btn" onclick="deleteWeight('${date}')" title="Delete">×</button></td>
+      </tr>`;
+    });
+    html += '</tbody>';
+    table.innerHTML = html;
+  }
+
+  // Init
+  document.addEventListener('DOMContentLoaded', () => {
+    const today = todayISO();
+    $('steps-date').value = today;
+    $('steps-date').max = today;
+    $('weight-date').value = today;
+    $('weight-date').max = today;
+    loadData();
+  });
+</script>
+
+</body>
+</html>
