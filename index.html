@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Upper / Lower · 4-Day Training Block</title>
+<title>Push / Pull · 5-Day Training Block · Sat–Thu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -80,7 +80,7 @@
     margin-top: 24px;
     color: var(--ink-dim);
     font-size: 15px;
-    max-width: 620px;
+    max-width: 640px;
     line-height: 1.65;
   }
 
@@ -249,6 +249,48 @@
   }
   td.rest { color: var(--ink-dim); font-weight: 400; }
 
+  /* GROUP HEADER — pairs exercises by muscle synergy */
+  tr.group-row { border-bottom: none !important; }
+  tr.group-row td {
+    padding: 22px 0 6px !important;
+    border-bottom: none !important;
+  }
+  .ex-table tr.group-row:first-child td { padding-top: 4px !important; }
+  .group-header {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--border-strong);
+    flex-wrap: wrap;
+  }
+  .group-tag {
+    color: var(--bg);
+    background: var(--accent);
+    padding: 3px 8px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    border-radius: 2px;
+    font-size: 9px;
+  }
+  .group-name {
+    color: var(--ink);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+  }
+  .group-synergy {
+    color: var(--muted);
+    margin-left: auto;
+    letter-spacing: 0.06em;
+    font-style: italic;
+    text-transform: none;
+    font-size: 11px;
+  }
+
   /* NOTES */
   .split-notes {
     background: var(--panel);
@@ -311,6 +353,8 @@
     .ex-num { width: 28px; font-size: 10px; }
     .split-notes { padding: 20px; }
     .week-table td.muscles { font-size: 12px; }
+    .group-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .group-synergy { margin-left: 0; }
   }
 </style>
 </head>
@@ -326,23 +370,23 @@
 
 
   <header class="hero">
-    <div class="hero-meta">Training block · 4 days/week</div>
-    <h1 class="hero-title">Upper /<br><span class="accent">Lower</span></h1>
-    <p class="hero-sub">A 4-day return-to-lifting block. Conservative starting weights, form-first, progress week over week. Designed for body recomposition — training for muscle preservation in a caloric deficit.</p>
+    <div class="hero-meta">Training block · 5 days/week</div>
+    <h1 class="hero-title">Push /<br><span class="accent">Pull</span></h1>
+    <p class="hero-sub">A 5-day push/pull hitting every trainable muscle group 2x per week — including traps, forearms, glute medius, rotator cuff, and rear delts that most 5-day programs skip. Exercises are grouped by synergy within each day so muscles that work together get trained together. Abs on 4 of 5 days.</p>
   </header>
 
   <div class="overview">
-    <div class="section-label"><span>Weekly Schedule</span><span class="count">4 sessions</span></div>
+    <div class="section-label"><span>Weekly Schedule</span><span class="count">5 sessions</span></div>
     <table class="week-table">
       <thead><tr><th>Day</th><th>Session</th><th>Focus</th></tr></thead>
       <tbody>
-        <tr><td class="day">Mon</td><td>Lower A</td><td class="muscles">Quad-dominant · Hamstrings · Calves</td></tr>
-        <tr><td class="day">Tue</td><td>Upper A</td><td class="muscles">Chest · Back · Shoulders</td></tr>
-        <tr class="rest"><td class="day">Wed</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
-        <tr><td class="day">Thu</td><td>Lower B</td><td class="muscles">Hip/Glute-dominant · Quads · Calves</td></tr>
+        <tr><td class="day">Sat</td><td>Push A + Quads</td><td class="muscles">Chest · Front/Side Delts · Triceps · Quads · Core</td></tr>
+        <tr><td class="day">Sun</td><td>Pull A + Traps</td><td class="muscles">Back · Rear Delts · Traps · Biceps · Brachialis · Abs</td></tr>
+        <tr class="rest"><td class="day">Mon</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
+        <tr><td class="day">Tue</td><td>Legs + Hip Stabilizers</td><td class="muscles">Quads · Hams · Glutes (max + medius) · Calves · Adductors</td></tr>
+        <tr><td class="day">Wed</td><td>Push B + Rear Delts</td><td class="muscles">Shoulders · Chest · Rear Delts · Triceps · Rotator Cuff · Abs</td></tr>
+        <tr><td class="day">Thu</td><td>Pull B + Posterior</td><td class="muscles">Back · Lats · Hams/Glutes · Biceps · Forearms · Calves</td></tr>
         <tr class="rest"><td class="day">Fri</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
-        <tr><td class="day">Sat</td><td>Upper B</td><td class="muscles">Incline push · Vertical pull · Arms</td></tr>
-        <tr class="rest"><td class="day">Sun</td><td colspan="2"><span class="rest-label">— Rest —</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -351,91 +395,25 @@
     <strong>Warm-up (every session)</strong> &nbsp; 5 min incline walk or bike, then 2 progressive warm-up sets on the first compound (e.g. empty bar × 10, then 60% of working weight × 5) before starting your working sets.
   </div>
 
-  <div class="section-label"><span>Sessions</span><span class="count">4 days</span></div>
+  <div class="section-label"><span>Sessions</span><span class="count">Grouped by synergy</span></div>
   <div class="days">
 
-    <!-- LOWER A -->
+    <!-- SAT - PUSH A + QUADS -->
     <article class="day-card">
       <div class="day-header">
         <span class="day-marker">Day 01</span>
-        <span class="day-tag">Mon · Lower A</span>
-        <h3 class="day-title">Quads · Hamstrings · Calves</h3>
+        <span class="day-tag">Sat · Push A + Quads</span>
+        <h3 class="day-title">Chest · Quads · Shoulders · Triceps</h3>
       </div>
       <table class="ex-table">
         <tbody>
-          <tr>
-            <td class="ex-num">01</td>
-            <td>
-              <div class="ex-name">Barbell Back Squat</div>
-              <div class="ex-note">Depth over weight. Brace hard, hips and knees break together</div>
-              <div class="ex-weight"><span class="label">Start</span>25 kg · warm-up empty bar × 10, then 20 kg × 5</div>
-            </td>
-            <td class="reps">3 × 6–8</td>
-            <td class="rest">2–3m</td>
-          </tr>
-          <tr>
-            <td class="ex-num">02</td>
-            <td>
-              <div class="ex-name">Romanian Deadlift</div>
-              <div class="ex-note">Hinge dominant, slight knee bend, bar drags close to legs</div>
-              <div class="ex-weight"><span class="label">Start</span>40 kg · warm-up 30 kg × 8</div>
-            </td>
-            <td class="reps">3 × 8</td>
-            <td class="rest">2m</td>
-          </tr>
-          <tr>
-            <td class="ex-num">03</td>
-            <td>
-              <div class="ex-name">Leg Press</div>
-              <div class="ex-note">Feet mid-platform, full ROM, no lockout</div>
-              <div class="ex-weight"><span class="label">Start</span>Machine-dependent · aim for last rep hard, 1–2 in reserve</div>
-            </td>
-            <td class="reps">3 × 10–12</td>
-            <td class="rest">90s</td>
-          </tr>
-          <tr>
-            <td class="ex-num">04</td>
-            <td>
-              <div class="ex-name">Seated or Lying Leg Curl</div>
-              <div class="ex-note">Slow eccentric, full contraction at top</div>
-              <div class="ex-weight"><span class="label">Start</span>Lightest stack that gives a challenging last rep</div>
-            </td>
-            <td class="reps">3 × 10–12</td>
-            <td class="rest">60s</td>
-          </tr>
-          <tr>
-            <td class="ex-num">05</td>
-            <td>
-              <div class="ex-name">Standing Calf Raise</div>
-              <div class="ex-note">Full stretch at bottom, brief pause at top</div>
-              <div class="ex-weight"><span class="label">Start</span>Bodyweight or +20 kg</div>
-            </td>
-            <td class="reps">3 × 12–15</td>
-            <td class="rest">60s</td>
-          </tr>
-          <tr>
-            <td class="ex-num">06</td>
-            <td>
-              <div class="ex-name">Plank</div>
-              <div class="ex-note">Glutes squeezed, no sag, breathe through nose</div>
-              <div class="ex-weight"><span class="label">Start</span>Bodyweight</div>
-            </td>
-            <td class="reps">3 × 45s</td>
-            <td class="rest">45s</td>
-          </tr>
-        </tbody>
-      </table>
-    </article>
-
-    <!-- UPPER A -->
-    <article class="day-card">
-      <div class="day-header">
-        <span class="day-marker">Day 02</span>
-        <span class="day-tag">Tue · Upper A</span>
-        <h3 class="day-title">Chest · Back · Shoulders</h3>
-      </div>
-      <table class="ex-table">
-        <tbody>
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">A</span>
+              <span class="group-name">Horizontal Push</span>
+              <span class="group-synergy">Chest · Front Delts · Triceps</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">01</td>
             <td>
@@ -443,49 +421,73 @@
               <div class="ex-note">Tight scap, feet planted, bar to mid-chest, controlled descent</div>
               <div class="ex-weight"><span class="label">Start</span>30 kg · warm-up empty bar × 10, then 25 kg × 5</div>
             </td>
-            <td class="reps">3 × 6–8</td>
+            <td class="reps">4 × 6–8</td>
             <td class="rest">2–3m</td>
           </tr>
           <tr>
             <td class="ex-num">02</td>
             <td>
-              <div class="ex-name">Barbell Bent-Over Row</div>
-              <div class="ex-note">Torso ~45°, pull to lower ribs, no torso swing</div>
-              <div class="ex-weight"><span class="label">Start</span>30 kg · warm-up 20 kg × 8</div>
+              <div class="ex-name">Incline Dumbbell Press (30°)</div>
+              <div class="ex-note">Upper chest bias, deeper ROM than barbell</div>
+              <div class="ex-weight"><span class="label">Start</span>12 kg each hand</div>
             </td>
-            <td class="reps">3 × 6–8</td>
-            <td class="rest">2m</td>
+            <td class="reps">3 × 8–10</td>
+            <td class="rest">90s</td>
           </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">B</span>
+              <span class="group-name">Quad Compound</span>
+              <span class="group-synergy">Quads · Glutes · Core stability</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">03</td>
             <td>
+              <div class="ex-name">Front Squat (or DB Walking Lunge)</div>
+              <div class="ex-note">Elbows up, upright torso · Lunge alt: long stride, control descent</div>
+              <div class="ex-weight"><span class="label">Start</span>Front squat: 20 kg (empty bar) · DB Lunge: 6 kg each hand</div>
+            </td>
+            <td class="reps">3 × 8–10</td>
+            <td class="rest">2m</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">C</span>
+              <span class="group-name">Vertical Push + Side Delts</span>
+              <span class="group-synergy">All 3 delt heads · Triceps assist</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">04</td>
+            <td>
               <div class="ex-name">Seated Dumbbell Shoulder Press</div>
               <div class="ex-note">Back supported, full ROM without shrugging</div>
-              <div class="ex-weight"><span class="label">Start</span>8 kg each hand · use 10 kg once 3 × 10 is easy</div>
+              <div class="ex-weight"><span class="label">Start</span>10 kg each hand</div>
             </td>
             <td class="reps">3 × 8–10</td>
             <td class="rest">90s</td>
           </tr>
           <tr>
-            <td class="ex-num">04</td>
-            <td>
-              <div class="ex-name">Lat Pulldown (wide grip)</div>
-              <div class="ex-note">Slight backward lean, elbows drive down to sides</div>
-              <div class="ex-weight"><span class="label">Start</span>30–35 kg · adjust so last 2 reps are challenging</div>
-            </td>
-            <td class="reps">3 × 10–12</td>
-            <td class="rest">60s</td>
-          </tr>
-          <tr>
             <td class="ex-num">05</td>
             <td>
-              <div class="ex-name">EZ-Bar or Barbell Curl</div>
-              <div class="ex-note">Elbows fixed at sides, no swing</div>
-              <div class="ex-weight"><span class="label">Start</span>15 kg (EZ bar loaded) or 15 kg straight bar</div>
+              <div class="ex-name">Cable Lateral Raise</div>
+              <div class="ex-note">Slight forward lean, pinky higher, constant tension</div>
+              <div class="ex-weight"><span class="label">Start</span>Lightest setting that gives a challenging last rep</div>
             </td>
-            <td class="reps">3 × 8–10</td>
+            <td class="reps">3 × 12–15</td>
             <td class="rest">60s</td>
           </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">D</span>
+              <span class="group-name">Tricep Isolation</span>
+              <span class="group-synergy">Triceps · Lateral head focus</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">06</td>
             <td>
@@ -496,45 +498,212 @@
             <td class="reps">3 × 10–12</td>
             <td class="rest">60s</td>
           </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">E</span>
+              <span class="group-name">Core & Rotation</span>
+              <span class="group-synergy">Lower abs · Hip flexors · Obliques</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">07</td>
+            <td>
+              <div class="ex-name">Hanging Leg Raise</div>
+              <div class="ex-note">No swing, control up and down</div>
+              <div class="ex-weight"><span class="label">Start</span>Bodyweight · progress to weighted once 3 × 15 is easy</div>
+            </td>
+            <td class="reps">3 × 12–15</td>
+            <td class="rest">60s</td>
+          </tr>
+          <tr>
+            <td class="ex-num">08</td>
+            <td>
+              <div class="ex-name">Cable Woodchop</div>
+              <div class="ex-note">Rotational core, drive from hips</div>
+              <div class="ex-weight"><span class="label">Start</span>Light — form and rotation over load</div>
+            </td>
+            <td class="reps">3 × 10/side</td>
+            <td class="rest">60s</td>
+          </tr>
         </tbody>
       </table>
     </article>
 
-    <!-- LOWER B -->
+    <!-- SUN - PULL A + TRAPS -->
     <article class="day-card">
       <div class="day-header">
-        <span class="day-marker">Day 03</span>
-        <span class="day-tag">Thu · Lower B</span>
-        <h3 class="day-title">Hip/Glute · Quads · Calves</h3>
+        <span class="day-marker">Day 02</span>
+        <span class="day-tag">Sun · Pull A + Traps</span>
+        <h3 class="day-title">Back · Rear Delts · Traps · Biceps</h3>
       </div>
       <table class="ex-table">
         <tbody>
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">A</span>
+              <span class="group-name">Back Compounds</span>
+              <span class="group-synergy">Lats · Rhomboids · Rear Delts · Biceps assist</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">01</td>
             <td>
-              <div class="ex-name">Trap Bar Deadlift (or Conventional)</div>
-              <div class="ex-note">Reset each rep, no bounce, neutral spine — trap bar is easier on your lower back</div>
-              <div class="ex-weight"><span class="label">Start</span>40 kg · warm-up 20 kg × 5, then 30 kg × 5</div>
+              <div class="ex-name">Barbell Bent-Over Row</div>
+              <div class="ex-note">Torso ~45°, pull to lower ribs, no torso swing</div>
+              <div class="ex-weight"><span class="label">Start</span>30 kg · warm-up 20 kg × 8</div>
             </td>
-            <td class="reps">3 × 5</td>
-            <td class="rest">3m</td>
+            <td class="reps">4 × 6–8</td>
+            <td class="rest">2–3m</td>
           </tr>
           <tr>
             <td class="ex-num">02</td>
             <td>
-              <div class="ex-name">Barbell Hip Thrust</div>
-              <div class="ex-note">Chin tucked, glutes drive up, hold lockout 1 second</div>
-              <div class="ex-weight"><span class="label">Start</span>40 kg · warm-up 20 kg × 10</div>
+              <div class="ex-name">Weighted Pull-up (or Lat Pulldown)</div>
+              <div class="ex-note">Full ROM, chest to bar · pulldown if you can't hit 6 clean reps</div>
+              <div class="ex-weight"><span class="label">Start</span>Bodyweight · pulldown alt: 35 kg</div>
             </td>
             <td class="reps">3 × 8–10</td>
-            <td class="rest">90s</td>
+            <td class="rest">2m</td>
           </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">B</span>
+              <span class="group-name">Posterior Shoulder + Upper Back</span>
+              <span class="group-synergy">Rear Delts · Rotator Cuff · Upper Traps</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">03</td>
+            <td>
+              <div class="ex-name">Face Pull (rope, high pulley)</div>
+              <div class="ex-note">External rotation at end range — rear delts + rotator cuff</div>
+              <div class="ex-weight"><span class="label">Start</span>10–15 kg · very light, form focus</div>
+            </td>
+            <td class="reps">3 × 15</td>
+            <td class="rest">60s</td>
+          </tr>
+          <tr>
+            <td class="ex-num">04</td>
+            <td>
+              <div class="ex-name">Barbell Shrug (or Dumbbell Shrug)</div>
+              <div class="ex-note">Straight up, no roll · pause 1 sec at top · upper trap direct work most programs skip</div>
+              <div class="ex-weight"><span class="label">Start</span>40 kg (barbell) or 12 kg each hand (DB)</div>
+            </td>
+            <td class="reps">3 × 10–12</td>
+            <td class="rest">60s</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">C</span>
+              <span class="group-name">Biceps + Brachialis</span>
+              <span class="group-synergy">Biceps · Brachialis · Forearm flexors</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">05</td>
+            <td>
+              <div class="ex-name">Barbell Curl (EZ or straight bar)</div>
+              <div class="ex-note">Elbows fixed at sides, no swing — biceps direct</div>
+              <div class="ex-weight"><span class="label">Start</span>15 kg loaded (EZ bar or straight)</div>
+            </td>
+            <td class="reps">3 × 8–10</td>
+            <td class="rest">60s</td>
+          </tr>
+          <tr>
+            <td class="ex-num">06</td>
+            <td>
+              <div class="ex-name">Cable Hammer Curl (rope)</div>
+              <div class="ex-note">Neutral grip · hits brachialis + brachioradialis (forearm)</div>
+              <div class="ex-weight"><span class="label">Start</span>Moderate stack — controlled tempo</div>
+            </td>
+            <td class="reps">3 × 10–12</td>
+            <td class="rest">60s</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">D</span>
+              <span class="group-name">Core</span>
+              <span class="group-synergy">Rectus Abdominis · Transverse Abdominis · Anti-extension</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">07</td>
+            <td>
+              <div class="ex-name">Ab Wheel Rollout</div>
+              <div class="ex-note">Full extension without arching lower back — deep core work</div>
+              <div class="ex-weight"><span class="label">Start</span>Bodyweight kneeling · progress to standing</div>
+            </td>
+            <td class="reps">3 × 8–12</td>
+            <td class="rest">60s</td>
+          </tr>
+          <tr>
+            <td class="ex-num">08</td>
+            <td>
+              <div class="ex-name">Cable Crunch</div>
+              <div class="ex-note">Full spinal flexion, controlled, hips stay pinned</div>
+              <div class="ex-weight"><span class="label">Start</span>Moderate stack — should feel abs, not hip flexors</div>
+            </td>
+            <td class="reps">3 × 15–20</td>
+            <td class="rest">60s</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <!-- TUE - LEGS -->
+    <article class="day-card">
+      <div class="day-header">
+        <span class="day-marker">Day 03</span>
+        <span class="day-tag">Tue · Legs + Hip Stabilizers</span>
+        <h3 class="day-title">Quads · Hams · Glutes · Calves</h3>
+      </div>
+      <table class="ex-table">
+        <tbody>
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">A</span>
+              <span class="group-name">Bilateral Compounds</span>
+              <span class="group-synergy">Squat Pattern · Hinge Pattern · Full lower body</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">01</td>
+            <td>
+              <div class="ex-name">Barbell Back Squat</div>
+              <div class="ex-note">Depth over weight, brace hard — quads, glutes, adductors, erectors</div>
+              <div class="ex-weight"><span class="label">Start</span>25 kg · warm-up empty bar × 10, then 20 kg × 5</div>
+            </td>
+            <td class="reps">4 × 6–8</td>
+            <td class="rest">2–3m</td>
+          </tr>
+          <tr>
+            <td class="ex-num">02</td>
+            <td>
+              <div class="ex-name">Romanian Deadlift</div>
+              <div class="ex-note">Hinge dominant, bar drags close — hams, glutes, erector spinae</div>
+              <div class="ex-weight"><span class="label">Start</span>40 kg · warm-up 30 kg × 8</div>
+            </td>
+            <td class="reps">4 × 6–8</td>
+            <td class="rest">2m</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">B</span>
+              <span class="group-name">Unilateral + Isolation</span>
+              <span class="group-synergy">Single-leg Quads · Hamstring Isolation</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">03</td>
             <td>
               <div class="ex-name">Bulgarian Split Squat (DB)</div>
-              <div class="ex-note">Front leg ~70% loaded, deep ROM, control the descent</div>
-              <div class="ex-weight"><span class="label">Start</span>6 kg each hand · progress slowly, both legs must match</div>
+              <div class="ex-note">Front leg ~70% loaded · corrects L/R imbalances, hits adductors</div>
+              <div class="ex-weight"><span class="label">Start</span>6 kg each hand · both legs must match</div>
             </td>
             <td class="reps">3 × 10/leg</td>
             <td class="rest">90s</td>
@@ -542,104 +711,321 @@
           <tr>
             <td class="ex-num">04</td>
             <td>
-              <div class="ex-name">Leg Extension</div>
-              <div class="ex-note">Slow eccentric, isolate quads, don't yank the machine</div>
-              <div class="ex-weight"><span class="label">Start</span>Lightest stack that challenges the last 2 reps</div>
+              <div class="ex-name">Seated or Lying Leg Curl</div>
+              <div class="ex-note">Slow eccentric — hamstring knee-flexion isolation</div>
+              <div class="ex-weight"><span class="label">Start</span>Lightest stack that challenges the last rep</div>
             </td>
-            <td class="reps">3 × 12–15</td>
+            <td class="reps">3 × 10–12</td>
             <td class="rest">60s</td>
           </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">C</span>
+              <span class="group-name">Hip Stabilizers</span>
+              <span class="group-synergy">Glute Medius/Minimus · Lateral hip · Rarely trained</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">05</td>
             <td>
-              <div class="ex-name">Seated Calf Raise</div>
-              <div class="ex-note">Soleus focus, slow tempo, full stretch</div>
-              <div class="ex-weight"><span class="label">Start</span>20 kg</div>
+              <div class="ex-name">Hip Abduction Machine (or Banded Lateral Walk)</div>
+              <div class="ex-note">Glute medius & minimus — critical for hip stability, glute shape, and knee tracking</div>
+              <div class="ex-weight"><span class="label">Start</span>Moderate stack · slow tempo · Banded alt: monster walks 3 × 20 steps</div>
             </td>
-            <td class="reps">3 × 15–20</td>
+            <td class="reps">3 × 15</td>
             <td class="rest">45s</td>
           </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">D</span>
+              <span class="group-name">Calves + Core</span>
+              <span class="group-synergy">Gastrocnemius · Hip Flexors · Lower Abs</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">06</td>
             <td>
+              <div class="ex-name">Standing Calf Raise</div>
+              <div class="ex-note">Full stretch bottom, pause at top — gastrocnemius focus (bent-knee soleus on Thu)</div>
+              <div class="ex-weight"><span class="label">Start</span>Bodyweight or +20 kg</div>
+            </td>
+            <td class="reps">4 × 12–15</td>
+            <td class="rest">60s</td>
+          </tr>
+          <tr>
+            <td class="ex-num">07</td>
+            <td>
               <div class="ex-name">Hanging Knee Raise</div>
-              <div class="ex-note">No swing, control up and down</div>
+              <div class="ex-note">Core finisher after leg fatigue, no swing</div>
               <div class="ex-weight"><span class="label">Start</span>Bodyweight</div>
             </td>
-            <td class="reps">3 × 10–12</td>
+            <td class="reps">3 × 12–15</td>
             <td class="rest">60s</td>
           </tr>
         </tbody>
       </table>
     </article>
 
-    <!-- UPPER B -->
+    <!-- WED - PUSH B -->
     <article class="day-card">
       <div class="day-header">
         <span class="day-marker">Day 04</span>
-        <span class="day-tag">Sat · Upper B</span>
-        <h3 class="day-title">Incline Push · Vertical Pull · Arms</h3>
+        <span class="day-tag">Wed · Push B + Rear Delts</span>
+        <h3 class="day-title">Shoulders · Chest · Triceps</h3>
       </div>
       <table class="ex-table">
         <tbody>
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">A</span>
+              <span class="group-name">Vertical Push</span>
+              <span class="group-synergy">All 3 Delt Heads · Triceps · Upper Traps</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">01</td>
+            <td>
+              <div class="ex-name">Standing Overhead Press</div>
+              <div class="ex-note">Glutes squeezed, ribs down, drive bar straight up</div>
+              <div class="ex-weight"><span class="label">Start</span>20 kg (empty bar) · warm-up empty × 10, then 15 kg × 5</div>
+            </td>
+            <td class="reps">4 × 6–8</td>
+            <td class="rest">2–3m</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">B</span>
+              <span class="group-name">Horizontal Push</span>
+              <span class="group-synergy">Upper Chest · Front Delts · Triceps</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">02</td>
             <td>
               <div class="ex-name">Incline Barbell Bench Press (30°)</div>
               <div class="ex-note">Elbows ~45°, control down, drive up</div>
               <div class="ex-weight"><span class="label">Start</span>25 kg · warm-up empty bar × 10</div>
             </td>
-            <td class="reps">3 × 6–8</td>
-            <td class="rest">2–3m</td>
-          </tr>
-          <tr>
-            <td class="ex-num">02</td>
-            <td>
-              <div class="ex-name">Assisted Pull-up (or Lat Pulldown)</div>
-              <div class="ex-note">Full hang, chest to bar. Use assisted machine or bands if bodyweight is too heavy for 6 clean reps</div>
-              <div class="ex-weight"><span class="label">Start</span>Aim for 6 reps with 2 reserve · fall back to pulldown at 35 kg if needed</div>
-            </td>
-            <td class="reps">3 × 6–8</td>
+            <td class="reps">3 × 8–10</td>
             <td class="rest">2m</td>
           </tr>
           <tr>
             <td class="ex-num">03</td>
             <td>
-              <div class="ex-name">Incline Dumbbell Press</div>
-              <div class="ex-note">30° bench, deeper ROM than the barbell</div>
-              <div class="ex-weight"><span class="label">Start</span>10 kg each hand</div>
+              <div class="ex-name">Machine Chest Press or Cable Fly</div>
+              <div class="ex-note">Squeeze and hold 1 second at midline — chest isolation</div>
+              <div class="ex-weight"><span class="label">Start</span>Machine-dependent — aim for last rep hard, 1–2 in reserve</div>
             </td>
-            <td class="reps">3 × 8–10</td>
+            <td class="reps">3 × 10–12</td>
             <td class="rest">90s</td>
           </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">C</span>
+              <span class="group-name">Delt Isolation (Side + Rear)</span>
+              <span class="group-synergy">Side Delts · Rear Delts · 2nd rear delt hit of the week</span>
+            </div>
+          </td></tr>
           <tr>
             <td class="ex-num">04</td>
             <td>
-              <div class="ex-name">Chest-Supported Row (machine or T-bar)</div>
-              <div class="ex-note">Kill momentum, isolate back, squeeze scaps at end</div>
-              <div class="ex-weight"><span class="label">Start</span>20 kg per side (T-bar) or lightest stack that challenges</div>
+              <div class="ex-name">Dumbbell Lateral Raise (high rep)</div>
+              <div class="ex-note">Lighter weight, metabolic finisher for side delts</div>
+              <div class="ex-weight"><span class="label">Start</span>4–5 kg each hand</div>
             </td>
-            <td class="reps">3 × 8–10</td>
-            <td class="rest">90s</td>
+            <td class="reps">3 × 15–20</td>
+            <td class="rest">60s</td>
           </tr>
           <tr>
             <td class="ex-num">05</td>
             <td>
-              <div class="ex-name">Face Pull (rope, high pulley)</div>
-              <div class="ex-note">External rotation at end range · rear delts + rotator cuff health</div>
-              <div class="ex-weight"><span class="label">Start</span>10–15 kg · very light, form focus</div>
+              <div class="ex-name">Reverse Pec Deck (or DB Reverse Fly)</div>
+              <div class="ex-note">Squeeze rear delts, control tempo — 2nd exposure this week (face pull on Mon was first)</div>
+              <div class="ex-weight"><span class="label">Start</span>Light stack (machine) or 4 kg each hand (DB)</div>
             </td>
-            <td class="reps">3 × 15</td>
+            <td class="reps">3 × 12–15</td>
+            <td class="rest">60s</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">D</span>
+              <span class="group-name">Triceps (Compound + Long Head)</span>
+              <span class="group-synergy">Triceps all 3 heads · Chest assist on close-grip</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">06</td>
+            <td>
+              <div class="ex-name">Close-Grip Bench Press</div>
+              <div class="ex-note">Shoulder-width grip, elbows tucked — tricep compound builder</div>
+              <div class="ex-weight"><span class="label">Start</span>25 kg</div>
+            </td>
+            <td class="reps">3 × 8–10</td>
+            <td class="rest">90s</td>
+          </tr>
+          <tr>
+            <td class="ex-num">07</td>
+            <td>
+              <div class="ex-name">Rope Overhead Tricep Extension</div>
+              <div class="ex-note">Full stretch on long head — the head close-grip doesn't hit as hard</div>
+              <div class="ex-weight"><span class="label">Start</span>Moderate stack — controlled tempo</div>
+            </td>
+            <td class="reps">3 × 12–15</td>
+            <td class="rest">60s</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">E</span>
+              <span class="group-name">Core Isometric</span>
+              <span class="group-synergy">Transverse Abdominis · Full-body brace</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">08</td>
+            <td>
+              <div class="ex-name">Plank</div>
+              <div class="ex-note">Glutes squeezed, no sag, breathe through nose</div>
+              <div class="ex-weight"><span class="label">Start</span>Bodyweight — progress by time, not load</div>
+            </td>
+            <td class="reps">3 × 45–60s</td>
+            <td class="rest">45s</td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
+
+    <!-- THU - PULL B + POSTERIOR -->
+    <article class="day-card">
+      <div class="day-header">
+        <span class="day-marker">Day 05</span>
+        <span class="day-tag">Thu · Pull B + Posterior</span>
+        <h3 class="day-title">Back · Hams/Glutes · Biceps · Calves</h3>
+      </div>
+      <table class="ex-table">
+        <tbody>
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">A</span>
+              <span class="group-name">Back Compounds</span>
+              <span class="group-synergy">Lats width · Mid Back thickness · Biceps assist</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">01</td>
+            <td>
+              <div class="ex-name">Weighted Pull-up (or Lat Pulldown)</div>
+              <div class="ex-note">Width focus, wide grip, full hang bottom</div>
+              <div class="ex-weight"><span class="label">Start</span>Bodyweight · pulldown alt: 35 kg</div>
+            </td>
+            <td class="reps">4 × 6–8</td>
+            <td class="rest">2–3m</td>
+          </tr>
+          <tr>
+            <td class="ex-num">02</td>
+            <td>
+              <div class="ex-name">Chest-Supported Row (T-bar or machine)</div>
+              <div class="ex-note">Kill momentum, isolate back, squeeze scaps at end</div>
+              <div class="ex-weight"><span class="label">Start</span>20 kg per side (T-bar) or moderate stack</div>
+            </td>
+            <td class="reps">3 × 8–10</td>
+            <td class="rest">2m</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">B</span>
+              <span class="group-name">Lat Isolation + Serratus</span>
+              <span class="group-synergy">Lats (long-arm stretch) · Serratus Anterior</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">03</td>
+            <td>
+              <div class="ex-name">Straight-Arm Pulldown (rope)</div>
+              <div class="ex-note">Straight elbows, hinge slightly, drive rope to thighs — isolates lats + hits serratus most programs skip</div>
+              <div class="ex-weight"><span class="label">Start</span>Light stack · form and stretch over load</div>
+            </td>
+            <td class="reps">3 × 12</td>
+            <td class="rest">60s</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">C</span>
+              <span class="group-name">Posterior Chain</span>
+              <span class="group-synergy">Hamstrings · Glutes · Balance · 2nd hip hinge exposure</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">04</td>
+            <td>
+              <div class="ex-name">Single-Leg Romanian Deadlift (DB)</div>
+              <div class="ex-note">Balance + posterior chain, less spinal load than Tue's barbell RDL</div>
+              <div class="ex-weight"><span class="label">Start</span>8 kg each hand · form-focus, both legs match</div>
+            </td>
+            <td class="reps">3 × 8–10/leg</td>
+            <td class="rest">90s</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">D</span>
+              <span class="group-name">Biceps + Forearm Extensors</span>
+              <span class="group-synergy">Biceps (peak) · Forearm extensors (usually neglected)</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">05</td>
+            <td>
+              <div class="ex-name">Preacher Curl (EZ bar)</div>
+              <div class="ex-note">Slow eccentric, no swinging — isolates biceps, hits short head hard</div>
+              <div class="ex-weight"><span class="label">Start</span>12 kg loaded (EZ bar)</div>
+            </td>
+            <td class="reps">3 × 10</td>
             <td class="rest">60s</td>
           </tr>
           <tr>
             <td class="ex-num">06</td>
             <td>
-              <div class="ex-name">Overhead DB Tricep Extension</div>
-              <div class="ex-note">Deep stretch on long head, elbows tucked</div>
-              <div class="ex-weight"><span class="label">Start</span>8 kg (one dumbbell held with both hands)</div>
+              <div class="ex-name">Reverse Wrist Curl (DB or barbell)</div>
+              <div class="ex-note">Palm-down curl at wrist — forearm extensors, prevents elbow tendinopathy from all the pulling</div>
+              <div class="ex-weight"><span class="label">Start</span>4–6 kg each hand · light, high rep</div>
             </td>
-            <td class="reps">3 × 10–12</td>
+            <td class="reps">3 × 15</td>
+            <td class="rest">45s</td>
+          </tr>
+
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">E</span>
+              <span class="group-name">Calves + Obliques</span>
+              <span class="group-synergy">Soleus · Obliques · Rotational core</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num">07</td>
+            <td>
+              <div class="ex-name">Seated Calf Raise</div>
+              <div class="ex-note">Bent knee shifts focus to soleus (different from Tue's gastroc-dominant standing raise)</div>
+              <div class="ex-weight"><span class="label">Start</span>20 kg</div>
+            </td>
+            <td class="reps">3 × 15–20</td>
+            <td class="rest">60s</td>
+          </tr>
+          <tr>
+            <td class="ex-num">08</td>
+            <td>
+              <div class="ex-name">Weighted Russian Twist</div>
+              <div class="ex-note">Feet off ground, controlled rotation — oblique focus</div>
+              <div class="ex-weight"><span class="label">Start</span>4–6 kg (dumbbell or plate)</div>
+            </td>
+            <td class="reps">3 × 20 total</td>
             <td class="rest">60s</td>
           </tr>
         </tbody>
@@ -649,11 +1035,42 @@
   </div>
 
   <div class="split-notes">
+    <h4>Muscle Coverage · Everything 2x/Week</h4>
+    <ul>
+      <li><strong>Chest</strong> (pec major upper + lower): Sat (bench, incline DB) + Wed (incline BB, chest press, close-grip) = 2x</li>
+      <li><strong>Front Delts:</strong> Sat (bench, DB press) + Wed (OHP, incline BB) = 2x</li>
+      <li><strong>Side Delts:</strong> Sat (cable lateral) + Wed (DB lateral) = 2x</li>
+      <li><strong>Rear Delts:</strong> Sun (face pull) + Wed (reverse pec deck) = 2x</li>
+      <li><strong>Triceps</strong> (all 3 heads): Sat (pushdown) + Wed (close-grip + rope OH for long head) = 2x</li>
+      <li><strong>Traps</strong> (upper + mid + lower): Sun (shrug + face pull) + Wed (OHP indirect) + Thu (row) = 2x+</li>
+      <li><strong>Lats:</strong> Sun (row, pull-up) + Thu (pull-up, CSR, straight-arm PD) = 2x</li>
+      <li><strong>Rhomboids/Mid Back:</strong> Sun (row, face pull) + Thu (CSR) = 2x</li>
+      <li><strong>Biceps:</strong> Sun (BB curl, hammer) + Thu (preacher curl) = 2x</li>
+      <li><strong>Brachialis:</strong> Sun (hammer curl) + Thu (preacher, hammer indirect) = 2x</li>
+      <li><strong>Forearm Flexors:</strong> Sun (all pulls, hammer curl grip) + Thu (all pulls) = 2x indirect + direct</li>
+      <li><strong>Forearm Extensors:</strong> Thu (reverse wrist curl) = 1x direct (rarely trained — this is enough)</li>
+      <li><strong>Serratus Anterior:</strong> Sat (bench with proper scap protraction) + Thu (straight-arm PD) = 2x</li>
+      <li><strong>Rotator Cuff:</strong> Sun (face pull) + Wed (reverse pec deck) = 2x</li>
+      <li><strong>Erector Spinae:</strong> Tue (squat, RDL) + Thu (single-leg RDL) = 2x</li>
+      <li><strong>Quads:</strong> Sat (front squat/lunge) + Tue (back squat, split squat) = 2x</li>
+      <li><strong>Hamstrings:</strong> Tue (RDL, leg curl, split squat) + Thu (single-leg RDL) = 2x</li>
+      <li><strong>Glute Max:</strong> Tue (squat, RDL, split squat) + Thu (single-leg RDL) = 2x</li>
+      <li><strong>Glute Medius/Minimus:</strong> Tue (hip abduction, split squat) + Thu (single-leg RDL stabilization) = 2x</li>
+      <li><strong>Adductors:</strong> Tue (squat, Bulgarian split squat) = 1x compound</li>
+      <li><strong>Calves (Gastrocnemius):</strong> Tue (standing calf) + Sun/Wed (indirect through squat/lunge) = 2x</li>
+      <li><strong>Calves (Soleus):</strong> Thu (seated calf) = 1x direct (bent-knee position is what isolates it)</li>
+      <li><strong>Hip Flexors:</strong> Sat (hanging leg raise) + Tue (hanging knee raise) = 2x</li>
+      <li><strong>Abs</strong> (Rectus + Transverse + Obliques): Sat + Sun + Wed + Thu = 4x with variety</li>
+    </ul>
+  </div>
+
+  <div class="split-notes">
     <h4>Progression Rules</h4>
     <ul>
-      <li><strong>Compounds</strong> (bench, squat, row, RDL, OHP, deadlift): add <strong>2.5 kg</strong> when you hit the top of the rep range on all working sets with clean form.</li>
-      <li><strong>Isolations</strong> (curls, extensions, calves, machines): add <strong>reps first</strong> — once you hold the top of the range for 2 sessions, then bump the weight.</li>
-      <li><strong>Weeks 1–2</strong> are form and neural drive — don't chase weight. If a session feels too light, resist adding load; earn it with clean reps first.</li>
+      <li><strong>Compounds</strong> (bench, squat, OHP, RDL, row, front squat): add 2.5 kg when you hit the top of the rep range on all working sets with clean form.</li>
+      <li><strong>Isolations:</strong> add reps first — once you hold the top of the range for 2 sessions, then bump the weight.</li>
+      <li><strong>New exercises</strong> (front squat, single-leg RDL, hip abduction, reverse wrist curl, straight-arm pulldown): start light for 2–3 weeks. Nail form before chasing load.</li>
+      <li><strong>If you've been progressing on the U/L split,</strong> carry those working weights forward for shared movements.</li>
       <li><strong>Log every session</strong> — weight × reps × RPE. Progressive overload in a deficit is a game of small weekly wins, not big jumps.</li>
     </ul>
   </div>
@@ -661,15 +1078,28 @@
   <div class="split-notes">
     <h4>Cut-Phase Notes</h4>
     <ul>
-      <li>If a compound feels 1–2 reps weaker two sessions in a row, check sleep, protein, and calories before blaming the program.</li>
-      <li>Rest periods on compounds are non-negotiable — you're training for muscle retention, not sweating.</li>
-      <li>Optional finisher (max 2×/week): 8–10 min incline walk after training. Skip intervals — recovery is already stressed by the deficit.</li>
-      <li>Schedule alternative — swap Sat → Wed if you want weekends fully free. Both work; Mon/Tue/Thu/Sat gives cleaner recovery spacing.</li>
+      <li><strong>Sat and Thu run longer (~75–80 min)</strong> because of the extra leg work. If late sets tank on those days, drop the last isolation before dropping the compound.</li>
+      <li><strong>Sat and Tue both hit quads.</strong> Keep Saturday's front squat/lunge moderate (RPE 7), save the intensity for Tuesday's main squat.</li>
+      <li><strong>Tue and Thu both hit posterior chain.</strong> Tue's RDL is heavy; Thu's single-leg RDL is lighter and mostly unilateral — don't try to match Tue's load.</li>
+      <li><strong>If your lower back feels beaten up mid-week,</strong> swap Thu's single-leg RDL for Barbell Hip Thrust (3 × 10 @ 40 kg) — still hits glutes/hams, no spinal load.</li>
+      <li><strong>Volume is higher than the U/L split</strong> (5 sessions, ~40 exercises/week). If sleep or recovery slips 2 weeks running, drop the last isolation from each day.</li>
+      <li><strong>Optional finisher (max 2×/week):</strong> 8–10 min incline walk after training. Skip intervals — recovery is already stressed by the deficit.</li>
+    </ul>
+  </div>
+
+  <div class="split-notes">
+    <h4>Substitutions & Notes</h4>
+    <ul>
+      <li><strong>Front Squat not comfortable?</strong> Sub DB Walking Lunge (3 × 10/leg @ 6 kg each).</li>
+      <li><strong>No hip abduction machine?</strong> Banded lateral walks (3 × 20 steps/direction) or side-lying leg raises hit the same muscle.</li>
+      <li><strong>No reverse pec deck?</strong> DB reverse fly (on flat bench, chest-down) or cable reverse fly (arms crossed at low pulley) both work.</li>
+      <li><strong>No T-bar row?</strong> Chest-supported machine row or DB row on an incline bench.</li>
+      <li><strong>Weighted Pull-up too hard?</strong> Assisted machine or bands until you can hit 3 × 6 clean at bodyweight.</li>
     </ul>
   </div>
 
   <footer>
-    Return-to-lifting block · Form first, weight second, consistency always
+    5-day push/pull · Comprehensive coverage · Grouped by synergy
   </footer>
 
 </div>
