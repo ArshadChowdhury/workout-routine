@@ -211,8 +211,12 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--muted);
-    width: 36px;
+    width: 42px;
     padding-top: 16px;
+  }
+  .ex-num.superset {
+    color: var(--accent);
+    font-weight: 600;
   }
   .ex-name {
     font-weight: 500;
@@ -277,6 +281,12 @@
     letter-spacing: 0.12em;
     border-radius: 2px;
     font-size: 9px;
+  }
+  .group-tag.ss {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    letter-spacing: 0.1em;
   }
   .group-name {
     color: var(--ink);
@@ -348,7 +358,7 @@
     .ex-note { font-size: 11.5px; }
     .ex-weight { font-size: 11px; }
     td.reps, td.rest { font-size: 12px; padding-left: 8px; }
-    .ex-num { width: 28px; font-size: 10px; }
+    .ex-num { width: 34px; font-size: 10px; }
     .split-notes { padding: 20px; }
     .week-table td.muscles { font-size: 12px; }
     .week-table td.priority { font-size: 10px; }
@@ -371,7 +381,7 @@
   <header class="hero">
     <div class="hero-meta">Training block · 4 days · Push · Pull · Legs · Upper</div>
     <h1 class="hero-title">Split /<br><span class="accent">Block</span></h1>
-    <p class="hero-sub">A 4-day PPLU split — Push and Pull on the weekend, dedicated Legs on Tuesday between rest days, and a priority Upper Body session on Wednesday before Fri+Sat rest. Legs consolidated into one focused session; every upper body muscle group still hits 2x per week.</p>
+    <p class="hero-sub">A 4-day PPLU split — Push and Pull on the weekend, dedicated Legs on Tuesday between rest days, and a priority Upper Body session on Wednesday structured as antagonist supersets. Legs consolidated into one focused session; every upper body muscle group hits 2x per week.</p>
   </header>
 
   <div class="overview">
@@ -383,7 +393,7 @@
         <tr><td class="day">Sun</td><td>Pull</td><td class="muscles">Back · Rear Delts · Traps · Biceps · Core</td><td class="priority">~85 min</td></tr>
         <tr class="rest"><td class="day">Mon</td><td colspan="3"><span class="rest-label">— Rest —</span></td></tr>
         <tr><td class="day">Tue</td><td>Legs</td><td class="muscles">Quads · Hamstrings · Glutes · Calves · Core</td><td class="priority">~85 min</td></tr>
-        <tr><td class="day">Wed</td><td>Upper</td><td class="muscles">Chest · Back · Shoulders · Arms · Core</td><td class="priority">Priority · ~95 min</td></tr>
+        <tr><td class="day">Wed</td><td>Upper (Supersets)</td><td class="muscles">Full upper · Antagonist pairs</td><td class="priority">Priority · ~70 min</td></tr>
         <tr class="rest"><td class="day">Thu</td><td colspan="3"><span class="rest-label">— Rest —</span></td></tr>
         <tr class="rest"><td class="day">Fri</td><td colspan="3"><span class="rest-label">— Rest —</span></td></tr>
       </tbody>
@@ -394,7 +404,7 @@
     <strong>Warm-up (every session)</strong> &nbsp; 5 min incline walk or bike, then 2 progressive warm-up sets on the first compound (e.g. empty bar × 10, then 60% of working weight × 5) before starting your working sets.
   </div>
 
-  <div class="section-label"><span>Sessions</span><span class="count">Priority volume on Wed</span></div>
+  <div class="section-label"><span>Sessions</span><span class="count">Wed = antagonist supersets</span></div>
   <div class="days">
 
     <!-- SAT - PUSH -->
@@ -416,8 +426,8 @@
           <tr>
             <td class="ex-num">01</td>
             <td>
-              <div class="ex-name">Smith Machine Bench Press</div>
-              <div class="ex-note">Fixed bar path — same chest stimulus as barbell bench, safer for shoulders during return</div>
+              <div class="ex-name">Smith Machine or Barbell Bench Press</div>
+              <div class="ex-note">Pick either — Smith for stability and fixed bar path, Barbell for free-weight stabilizer work. Alternate week to week if you want to hit both.</div>
               <div class="ex-weight"><span class="label">Start</span>Total load ~30 kg · warm-up empty × 10</div>
             </td>
             <td class="reps">4 × 6–8</td>
@@ -426,9 +436,9 @@
           <tr>
             <td class="ex-num">02</td>
             <td>
-              <div class="ex-name">Seated Dumbbell Shoulder Press</div>
-              <div class="ex-note">Back supported, full ROM without shrugging</div>
-              <div class="ex-weight"><span class="label">Start</span>10 kg each hand</div>
+              <div class="ex-name">Arnold Press</div>
+              <div class="ex-note">Start palms facing you, rotate as you press up — hits front and side delts through the full rotation. Seated with back support.</div>
+              <div class="ex-weight"><span class="label">Start</span>8–10 kg each hand · lighter than regular press due to ROM</div>
             </td>
             <td class="reps">4 × 8–10</td>
             <td class="rest">2m</td>
@@ -472,9 +482,9 @@
           <tr>
             <td class="ex-num">05</td>
             <td>
-              <div class="ex-name">Dumbbell Lateral Raise</div>
-              <div class="ex-note">Slight forward lean, pinky higher, constant tension</div>
-              <div class="ex-weight"><span class="label">Start</span>4–5 kg each hand · very light, form focus</div>
+              <div class="ex-name">Dumbbell or Cable Lateral Raise</div>
+              <div class="ex-note">Cable gives constant tension (better stimulus at bottom), DB is simpler setup. Both work — pick whichever feels better that day. Slight forward lean, pinky higher, controlled.</div>
+              <div class="ex-weight"><span class="label">Start</span>4–5 kg DB / light cable stack · form focus over load</div>
             </td>
             <td class="reps">3 × 12–15</td>
             <td class="rest">60s</td>
@@ -548,12 +558,12 @@
           <tr>
             <td class="ex-num">01</td>
             <td>
-              <div class="ex-name">Weighted Pull-up (or Lat Pulldown)</div>
-              <div class="ex-note">Full ROM, chest to bar. Pulldown if you can't hit 6 clean reps at BW.</div>
-              <div class="ex-weight"><span class="label">Start</span>Bodyweight · pulldown alt: 35 kg</div>
+              <div class="ex-name">Lat Pulldown (wide grip)</div>
+              <div class="ex-note">Pull to upper chest, lean back slightly at end, squeeze lats. Full stretch at top.</div>
+              <div class="ex-weight"><span class="label">Start</span>35 kg · form focus, no yanking with arms</div>
             </td>
             <td class="reps">4 × 6–8</td>
-            <td class="rest">2–3m</td>
+            <td class="rest">2m</td>
           </tr>
           <tr>
             <td class="ex-num">02</td>
@@ -615,16 +625,16 @@
           <tr class="group-row"><td colspan="4">
             <div class="group-header">
               <span class="group-tag">D</span>
-              <span class="group-name">Biceps (Free + Cable + Machine)</span>
-              <span class="group-synergy">Biceps · Brachialis · Three angles</span>
+              <span class="group-name">Biceps (Long Head Focus + Brachialis)</span>
+              <span class="group-synergy">Outer biceps · Fixes inner-head dominance</span>
             </div>
           </td></tr>
           <tr>
             <td class="ex-num">06</td>
             <td>
-              <div class="ex-name">Barbell Curl (EZ or straight bar)</div>
-              <div class="ex-note">Elbows fixed at sides, no swing — biceps compound</div>
-              <div class="ex-weight"><span class="label">Start</span>15 kg loaded (EZ bar or straight)</div>
+              <div class="ex-name">Incline Dumbbell Curl (45° bench)</div>
+              <div class="ex-note">Sit back on incline bench, arms hang straight down behind torso — this maximally stretches the long head (outer biceps). No other curl variation stretches it this hard. No swing, control the eccentric.</div>
+              <div class="ex-weight"><span class="label">Start</span>6–8 kg each hand · lighter than standing curl due to stretch position</div>
             </td>
             <td class="reps">3 × 8–10</td>
             <td class="rest">60s</td>
@@ -632,9 +642,9 @@
           <tr>
             <td class="ex-num">07</td>
             <td>
-              <div class="ex-name">Cable Hammer Curl (rope)</div>
-              <div class="ex-note">Neutral grip — hits brachialis + brachioradialis (forearm builder)</div>
-              <div class="ex-weight"><span class="label">Start</span>Moderate stack · controlled tempo</div>
+              <div class="ex-name">Bayesian Cable Curl (behind body)</div>
+              <div class="ex-note">Stand facing away from low pulley, arm behind body, curl forward and up. Same long-head stretch as incline curl but with constant cable tension — arguably even better stimulus. One arm at a time.</div>
+              <div class="ex-weight"><span class="label">Start</span>Light stack · form and stretch over load</div>
             </td>
             <td class="reps">3 × 10–12</td>
             <td class="rest">60s</td>
@@ -642,9 +652,9 @@
           <tr>
             <td class="ex-num">08</td>
             <td>
-              <div class="ex-name">Machine Biceps Curl</div>
-              <div class="ex-note">Fixed path lets you push biceps harder without stabilizer fatigue — third angle</div>
-              <div class="ex-weight"><span class="label">Start</span>Moderate stack · last 2 reps hard</div>
+              <div class="ex-name">Hammer Curl (DB or Cable rope)</div>
+              <div class="ex-note">Neutral grip — hits brachialis (pushes biceps up as it grows) + brachioradialis (forearm thickness). Doesn't hit the biceps directly but builds arm width from the side view.</div>
+              <div class="ex-weight"><span class="label">Start</span>8–10 kg DB each hand or moderate cable stack</div>
             </td>
             <td class="reps">3 × 10–12</td>
             <td class="rest">60s</td>
@@ -803,146 +813,185 @@
       </table>
     </article>
 
-    <!-- WED - UPPER (PRIORITY) -->
+    <!-- WED - UPPER (PRIORITY, SUPERSETS) -->
     <article class="day-card priority-day">
       <div class="day-header">
         <span class="day-marker">Day 04</span>
-        <span class="day-tag priority">Wed · Upper · Priority</span>
-        <h3 class="day-title">Chest · Back · Shoulders · Arms</h3>
+        <span class="day-tag priority">Wed · Upper · Supersets</span>
+        <h3 class="day-title">Antagonist Supersets · Full Upper</h3>
       </div>
+
+      <div class="warmup-note" style="margin-top:0; margin-bottom:20px;">
+        <strong>How to superset</strong> &nbsp; Do A1 → rest 30s → A2 → rest 90s → repeat for all sets before moving to the next pair. Antagonist muscles recover while the other works, so you save time and each muscle feels less trashed.
+      </div>
+
       <table class="ex-table">
         <tbody>
+          <!-- SUPERSET 1 -->
           <tr class="group-row"><td colspan="4">
             <div class="group-header">
-              <span class="group-tag">A</span>
-              <span class="group-name">Heavy Compounds (Push + Pull)</span>
-              <span class="group-synergy">Chest · Back · Shoulders — all three planes</span>
+              <span class="group-tag ss">SS 1</span>
+              <span class="group-name">Horizontal Push / Pull (Heavy)</span>
+              <span class="group-synergy">Chest ↔ Back thickness</span>
             </div>
           </td></tr>
           <tr>
-            <td class="ex-num">01</td>
+            <td class="ex-num superset">1A</td>
             <td>
               <div class="ex-name">Incline Barbell Bench Press (30°)</div>
               <div class="ex-note">Elbows ~45°, control down, drive up — upper chest primary</div>
               <div class="ex-weight"><span class="label">Start</span>25 kg · warm-up empty bar × 10</div>
             </td>
             <td class="reps">4 × 6–8</td>
-            <td class="rest">2–3m</td>
+            <td class="rest">30s → 1B</td>
           </tr>
           <tr>
-            <td class="ex-num">02</td>
+            <td class="ex-num superset">1B</td>
             <td>
-              <div class="ex-name">Weighted Pull-up (or Lat Pulldown)</div>
-              <div class="ex-note">Second vertical pull exposure this week — width focus</div>
-              <div class="ex-weight"><span class="label">Start</span>Bodyweight · pulldown alt: 35 kg</div>
+              <div class="ex-name">Barbell Bent-Over Row</div>
+              <div class="ex-note">Torso ~45°, pull to lower ribs — direct antagonist to bench, back handles the load while chest recovers</div>
+              <div class="ex-weight"><span class="label">Start</span>30 kg</div>
             </td>
             <td class="reps">4 × 6–8</td>
-            <td class="rest">2m</td>
-          </tr>
-          <tr>
-            <td class="ex-num">03</td>
-            <td>
-              <div class="ex-name">Standing Overhead Press</div>
-              <div class="ex-note">Glutes squeezed, ribs down, drive bar straight up</div>
-              <div class="ex-weight"><span class="label">Start</span>20 kg (empty bar) · warm-up empty × 10</div>
-            </td>
-            <td class="reps">4 × 6–8</td>
-            <td class="rest">2m</td>
+            <td class="rest">90s → 1A</td>
           </tr>
 
+          <!-- SUPERSET 2 -->
           <tr class="group-row"><td colspan="4">
             <div class="group-header">
-              <span class="group-tag">B</span>
-              <span class="group-name">Volume Push + Pull</span>
-              <span class="group-synergy">Back thickness · Chest isolation</span>
+              <span class="group-tag ss">SS 2</span>
+              <span class="group-name">Vertical Push / Pull (Heavy)</span>
+              <span class="group-synergy">Shoulders ↔ Lat width</span>
             </div>
           </td></tr>
           <tr>
-            <td class="ex-num">04</td>
+            <td class="ex-num superset">2A</td>
             <td>
-              <div class="ex-name">T-Bar Row</div>
-              <div class="ex-note">Torso ~45°, chest up, pull elbows back — different back-thickness angle than Sun's BB Row</div>
-              <div class="ex-weight"><span class="label">Start</span>20 kg per side · warm-up one plate × 8</div>
+              <div class="ex-name">Standing Overhead Press</div>
+              <div class="ex-note">Glutes squeezed, ribs down, drive bar straight up — different from Sat's Arnold Press (barbell + standing vs DB + seated)</div>
+              <div class="ex-weight"><span class="label">Start</span>20 kg (empty bar) · warm-up empty × 10</div>
             </td>
-            <td class="reps">3 × 8–10</td>
-            <td class="rest">90s</td>
+            <td class="reps">4 × 6–8</td>
+            <td class="rest">30s → 2B</td>
           </tr>
           <tr>
-            <td class="ex-num">05</td>
+            <td class="ex-num superset">2B</td>
             <td>
-              <div class="ex-name">Cable Fly (mid or low)</div>
-              <div class="ex-note">Squeeze and hold 1 second at midline — constant tension chest isolation, different feel from Sat's pec deck and DB pressing</div>
-              <div class="ex-weight"><span class="label">Start</span>Light stack · form and squeeze over load</div>
+              <div class="ex-name">Lat Pulldown (wide grip)</div>
+              <div class="ex-note">Second exposure this week — width focus. Pull to upper chest, squeeze lats.</div>
+              <div class="ex-weight"><span class="label">Start</span>35 kg</div>
             </td>
-            <td class="reps">3 × 10–12</td>
-            <td class="rest">90s</td>
+            <td class="reps">4 × 6–8</td>
+            <td class="rest">90s → 2A</td>
           </tr>
 
+          <!-- SUPERSET 3 -->
           <tr class="group-row"><td colspan="4">
             <div class="group-header">
-              <span class="group-tag">C</span>
-              <span class="group-name">Delt Isolation (Side + Rear)</span>
-              <span class="group-synergy">Side Delts · Rear Delts · Shoulder health</span>
+              <span class="group-tag ss">SS 3</span>
+              <span class="group-name">Chest + Back Detail</span>
+              <span class="group-synergy">Chest squeeze ↔ Back squeeze</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num superset">3A</td>
+            <td>
+              <div class="ex-name">Cable Fly (mid or low)</div>
+              <div class="ex-note">Squeeze and hold 1 second at midline — chest isolation with constant tension</div>
+              <div class="ex-weight"><span class="label">Start</span>Light stack · form over load</div>
+            </td>
+            <td class="reps">3 × 10–12</td>
+            <td class="rest">30s → 3B</td>
+          </tr>
+          <tr>
+            <td class="ex-num superset">3B</td>
+            <td>
+              <div class="ex-name">Chest-Supported Row (T-bar or machine)</div>
+              <div class="ex-note">Kill momentum, squeeze scaps at end — pure back thickness detail work</div>
+              <div class="ex-weight"><span class="label">Start</span>20 kg per side or moderate stack</div>
+            </td>
+            <td class="reps">3 × 8–10</td>
+            <td class="rest">75s → 3A</td>
+          </tr>
+
+          <!-- SUPERSET 4 -->
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag ss">SS 4</span>
+              <span class="group-name">Delts (Side + Rear)</span>
+              <span class="group-synergy">Side delts ↔ Rear delts</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num superset">4A</td>
+            <td>
+              <div class="ex-name">Cable Lateral Raise (or DB)</div>
+              <div class="ex-note">Cable for constant tension — 2nd side delt exposure this week</div>
+              <div class="ex-weight"><span class="label">Start</span>Light stack / 4–5 kg DB</div>
+            </td>
+            <td class="reps">3 × 12–15</td>
+            <td class="rest">30s → 4B</td>
+          </tr>
+          <tr>
+            <td class="ex-num superset">4B</td>
+            <td>
+              <div class="ex-name">Face Pull (rope)</div>
+              <div class="ex-note">2nd rear delt exposure — external rotation at end range for rotator cuff health after all the pressing</div>
+              <div class="ex-weight"><span class="label">Start</span>10–15 kg · form focus</div>
+            </td>
+            <td class="reps">3 × 15</td>
+            <td class="rest">60s → 4A</td>
+          </tr>
+
+          <!-- SUPERSET 5 -->
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag ss">SS 5</span>
+              <span class="group-name">Arms (Bi + Tri)</span>
+              <span class="group-synergy">Biceps ↔ Triceps — classic antagonist pair</span>
+            </div>
+          </td></tr>
+          <tr>
+            <td class="ex-num superset">5A</td>
+            <td>
+              <div class="ex-name">Cable Bicep Curl (straight bar)</div>
+              <div class="ex-note">Different feel from Sun's free-weight curls — cable keeps tension through full ROM. Elbows pinned.</div>
+              <div class="ex-weight"><span class="label">Start</span>Moderate stack · controlled tempo</div>
+            </td>
+            <td class="reps">3 × 10–12</td>
+            <td class="rest">30s → 5B</td>
+          </tr>
+          <tr>
+            <td class="ex-num superset">5B</td>
+            <td>
+              <div class="ex-name">Cable Tricep Pushdown (rope)</div>
+              <div class="ex-note">Elbows pinned, spread rope at bottom — same station as 5A, just switch position</div>
+              <div class="ex-weight"><span class="label">Start</span>15 kg</div>
+            </td>
+            <td class="reps">3 × 10–12</td>
+            <td class="rest">60s → 5A</td>
+          </tr>
+
+          <!-- ACCESSORIES -->
+          <tr class="group-row"><td colspan="4">
+            <div class="group-header">
+              <span class="group-tag">F</span>
+              <span class="group-name">Accessories (Straight Sets)</span>
+              <span class="group-synergy">Traps · Brachialis · Core — not superset</span>
             </div>
           </td></tr>
           <tr>
             <td class="ex-num">06</td>
             <td>
-              <div class="ex-name">Dumbbell Lateral Raise</div>
-              <div class="ex-note">Slight forward lean — 2nd side delt exposure (Sat was first)</div>
-              <div class="ex-weight"><span class="label">Start</span>4–5 kg each hand · light, form focus</div>
-            </td>
-            <td class="reps">3 × 12–15</td>
-            <td class="rest">60s</td>
-          </tr>
-          <tr>
-            <td class="ex-num">07</td>
-            <td>
-              <div class="ex-name">Face Pull (rope)</div>
-              <div class="ex-note">2nd rear delt exposure (Sun was first) — rotator cuff health after all the pressing</div>
-              <div class="ex-weight"><span class="label">Start</span>10–15 kg · form focus</div>
-            </td>
-            <td class="reps">3 × 15</td>
-            <td class="rest">60s</td>
-          </tr>
-
-          <tr class="group-row"><td colspan="4">
-            <div class="group-header">
-              <span class="group-tag">D</span>
-              <span class="group-name">Arms</span>
-              <span class="group-synergy">Biceps · Triceps · Second exposure of the week</span>
-            </div>
-          </td></tr>
-          <tr>
-            <td class="ex-num">08</td>
-            <td>
-              <div class="ex-name">Preacher Curl (EZ bar)</div>
-              <div class="ex-note">Slow eccentric, no swinging — different angle than Sun's standing curl</div>
-              <div class="ex-weight"><span class="label">Start</span>12 kg loaded (EZ bar)</div>
-            </td>
-            <td class="reps">3 × 10</td>
-            <td class="rest">60s</td>
-          </tr>
-          <tr>
-            <td class="ex-num">09</td>
-            <td>
-              <div class="ex-name">Cable Tricep Pushdown (rope)</div>
-              <div class="ex-note">Elbows pinned, spread rope at bottom — different tricep angle than Sat's overhead extension</div>
-              <div class="ex-weight"><span class="label">Start</span>15 kg</div>
+              <div class="ex-name">Dumbbell Shrug</div>
+              <div class="ex-note">Straight up, pause 1 second at top — second trap exposure of the week</div>
+              <div class="ex-weight"><span class="label">Start</span>12–15 kg each hand</div>
             </td>
             <td class="reps">3 × 10–12</td>
             <td class="rest">60s</td>
           </tr>
-
-          <tr class="group-row"><td colspan="4">
-            <div class="group-header">
-              <span class="group-tag">E</span>
-              <span class="group-name">Core</span>
-              <span class="group-synergy">Full-body isometric brace</span>
-            </div>
-          </td></tr>
           <tr>
-            <td class="ex-num">10</td>
+            <td class="ex-num">07</td>
             <td>
               <div class="ex-name">Plank</div>
               <div class="ex-note">Glutes squeezed, no sag, breathe through nose</div>
@@ -958,52 +1007,74 @@
   </div>
 
   <div class="split-notes">
-    <h4>Why This Split Structure</h4>
+    <h4>Why Antagonist Supersets on Wed</h4>
     <ul>
-      <li><strong>Sat + Sun</strong> pair naturally as your weekend push/pull block — you're fresh Saturday, and different muscles Sunday means minimal overlap.</li>
-      <li><strong>Mon rest</strong> lets both push and pull recover before Tue's dedicated leg day.</li>
-      <li><strong>Tue Legs</strong> sits between rest days — you're recovered coming in, and Wed's upper day doesn't compete with leg recovery.</li>
-      <li><strong>Wed Upper (priority)</strong> is your highest-volume session, hitting every upper body muscle a second time that week — Fri + Sat off afterward makes room for it.</li>
-      <li><strong>Legs 1x/week is the trade-off</strong> for a dedicated leg day. Less frequency but higher concentrated volume — this works well for legs specifically because they recover slower than upper body anyway.</li>
+      <li><strong>Less perceived soreness during the session</strong> — when you work chest, the back rests and takes light blood flow. Then the reverse. Each muscle feels less beaten up because it gets active recovery between its sets.</li>
+      <li><strong>Time efficient</strong> — Wed drops from ~95 min to ~70 min without losing volume. Rest for one muscle = work for the other.</li>
+      <li><strong>Same load, same reps</strong> — antagonist pairing doesn't reduce strength like same-muscle supersets do. You can still lift heavy in 1A and 2A.</li>
+      <li><strong>Better pump</strong> — alternating opposing muscles increases blood flow to the whole region, so the whole upper body feels worked as a system, not a checklist.</li>
+      <li><strong>Wed hits everything from Sat + Sun again</strong> — chest, back (3 angles), shoulders (front + side + rear), biceps, triceps, traps, core. Second exposure for all major upper-body muscles.</li>
     </ul>
   </div>
 
   <div class="split-notes">
     <h4>Muscle Coverage</h4>
     <ul>
-      <li><strong>Chest:</strong> Sat (Smith Bench, Incline DB, Pec Deck) + Wed (Incline BB, Cable Fly) = 2x</li>
-      <li><strong>Shoulders</strong> (front): Sat (DB Press) + Wed (OHP) = 2x</li>
+      <li><strong>Chest:</strong> Sat (Smith/BB Bench, Incline DB, Pec Deck) + Wed (Incline BB, Cable Fly) = 2x</li>
+      <li><strong>Shoulders</strong> (front + all heads): Sat (Arnold Press) + Wed (Standing OHP) = 2x</li>
       <li><strong>Shoulders</strong> (side): Sat (Lateral Raise) + Wed (Lateral Raise) = 2x</li>
       <li><strong>Rear Delts + Rotator Cuff:</strong> Sun (Face Pull) + Wed (Face Pull) = 2x</li>
       <li><strong>Triceps:</strong> Sat (Close-Grip, Rope Ext) + Wed (Pushdown) = 2x</li>
-      <li><strong>Back:</strong> Sun (Pull-up, BB Row, CSR) + Wed (Pull-up, T-Bar Row) = 2x</li>
-      <li><strong>Traps:</strong> Sun (Shrug) = 1x direct + indirect from rows</li>
-      <li><strong>Biceps:</strong> Sun (BB Curl, Hammer Curl, Machine Curl) + Wed (Preacher Curl) = 2x with four total exposures</li>
+      <li><strong>Back:</strong> Sun (Lat Pulldown, BB Row, CSR) + Wed (Lat Pulldown, BB Row, CSR) = 2x with 6 total row/pulldown exposures</li>
+      <li><strong>Traps:</strong> Sun (Shrug) + Wed (Shrug) = 2x</li>
+      <li><strong>Biceps</strong> (long head/outer): Sun (Incline DB Curl, Bayesian Cable Curl) + Wed (Cable Curl) = 3 long-head exposures — fixes the inner-head dominance from preacher-heavy training</li>
+      <li><strong>Brachialis + Forearms:</strong> Sun (Hammer Curl) = 1x direct — pushes biceps up as it grows, adds arm width from the side view</li>
       <li><strong>Quads:</strong> Tue (Squat, Leg Press, Leg Extension) = 1x with three exposures</li>
       <li><strong>Hamstrings:</strong> Tue (RDL, Lying Leg Curl) = 1x with concentrated volume</li>
       <li><strong>Glutes:</strong> Tue (Squat, RDL, Pull-Through) = 1x with concentrated volume</li>
       <li><strong>Calves:</strong> Tue (Standing Calf Raise) = 1x direct</li>
-      <li><strong>Abs:</strong> Sat + Sun + Tue + Wed = 4x with variety (Hanging Leg Raise, Cable Crunch, Hanging Knee Raise, Plank)</li>
+      <li><strong>Abs:</strong> Sat + Sun + Tue + Wed = 4x with variety</li>
+    </ul>
+  </div>
+
+  <div class="split-notes">
+    <h4>Superset Execution Rules</h4>
+    <ul>
+      <li><strong>Set up both stations before starting</strong> — load the bench AND the row bar before your first set. Nothing kills the flow like walking across the gym to grab plates mid-superset.</li>
+      <li><strong>Rest 30s between A → B</strong>, 90s between full rounds. If you rest longer, it stops being a superset — it just becomes two separate exercises.</li>
+      <li><strong>Match your weights to Sat/Sun</strong> — don't try to PR the compounds on Wed. Use the same working loads from your equivalent lifts earlier in the week.</li>
+      <li><strong>If the gym is busy</strong> and you can't hold two stations, run 1A + 1B → then 2A + 2B → etc. as circuits. Slightly less efficient but still antagonist pairing.</li>
     </ul>
   </div>
 
   <div class="split-notes">
     <h4>Progression Rules</h4>
     <ul>
-      <li><strong>Compounds</strong> (Smith Bench, OHP, RDL, BB Row, Pull-up, Squat): add 2.5 kg when you hit the top of the rep range on all working sets with clean form.</li>
-      <li><strong>Machines & isolations</strong> (Pec Deck, Cable Fly, Leg Curl, Leg Extension, Pull-Through, Face Pull, all curls, pushdowns): add reps first — once you hold the top of the range for 2 sessions, then bump the weight one increment.</li>
+      <li><strong>Compounds</strong> (Smith/BB Bench, Arnold, OHP, RDL, BB Row, Lat Pulldown, Squat): add 2.5 kg when you hit the top of the rep range on all working sets with clean form.</li>
+      <li><strong>Machines & isolations</strong>: add reps first — once you hold the top of the range for 2 sessions, then bump the weight one increment.</li>
       <li><strong>Log every session</strong> — weight × reps × RPE. Progressive overload in a deficit is a game of small weekly wins.</li>
+    </ul>
+  </div>
+
+  <div class="split-notes">
+    <h4>Fixing the Biceps Imbalance</h4>
+    <ul>
+      <li><strong>The problem with preacher-heavy training:</strong> the preacher pad puts your elbow in front of the body, which shortens the long head of the biceps (the outer/lateral head). Result: the short head (inner) gets hammered every set while the long head barely stretches — inner grows, outer stays flat, arm looks narrow from the front.</li>
+      <li><strong>The fix — train with elbows behind or at the body</strong> so the long head is fully stretched. Incline DB Curl and Bayesian Cable Curl both do this; they're arguably the two best long-head builders that exist.</li>
+      <li><strong>Incline DB Curl</strong> is the classic king — full stretch at the bottom, hard eccentric. Expect to use much less weight than standing curls (that stretch is brutal).</li>
+      <li><strong>Bayesian Cable Curl</strong> keeps constant tension throughout the entire ROM, which the DB version loses at the top. Best done one arm at a time so you can really focus.</li>
+      <li><strong>Hammer Curl</strong> doesn't hit the biceps directly, but the brachialis sits underneath the biceps — as it grows, it pushes the biceps up and out. You'll see arm width increase from the side view.</li>
+      <li><strong>Give it 8–12 weeks</strong> before you judge — muscle growth pattern shifts don't show up week 1. Track a mirror photo now for comparison.</li>
     </ul>
   </div>
 
   <div class="split-notes">
     <h4>Cut-Phase Notes</h4>
     <ul>
-      <li><strong>Total volume:</strong> ~35 exercises/week (8 + 9 + 8 + 10). Higher than a standard 4-day plan but front-loaded toward the rest days.</li>
+      <li><strong>Total volume:</strong> ~36 exercises/week (8 + 9 + 8 + 11). High but well distributed with Wed's superset structure keeping the session compact.</li>
       <li><strong>Sat + Sun back-to-back</strong> — respect the intra-workout rest periods. Sun's back work will feel heavier because of Sat's shoulder fatigue; that's normal.</li>
-      <li><strong>Wed is your hardest day</strong> — don't try to PR the compounds on Wed. Match the working weights from Sat/Sun's equivalent lifts.</li>
       <li><strong>Knee still recovering?</strong> Sub Leg Extension for Bulgarian Split Squat (3 × 10/leg, moderate depth). Leg extension is one of the worst exercises for patellofemoral pain.</li>
-      <li><strong>If Wed consistently ruins Thu recovery</strong>, drop the last exercise from each block (D and E) — Pushdown, Plank. That gets you to 8 exercises without losing anything critical.</li>
+      <li><strong>If Wed supersets still leave you smoked</strong>, drop the accessory block (Shrug + Plank) first — the 5 supersets alone hit everything critical.</li>
       <li><strong>Optional finisher (max 2×/week):</strong> 8–10 min incline walk after training. Only after Sat or Sun, never after Wed.</li>
     </ul>
   </div>
@@ -1011,18 +1082,20 @@
   <div class="split-notes">
     <h4>Substitutions</h4>
     <ul>
-      <li><strong>Ready to move to barbell bench?</strong> Once shoulders feel resilient (week 6–8+), replace Smith Machine Bench Press with Barbell Bench Press on Sat.</li>
+      <li><strong>Smith vs Barbell Bench</strong> — either works on Sat. Alternate week to week if you want both stimuli.</li>
+      <li><strong>Arnold Press too tricky?</strong> Fall back to Seated DB Shoulder Press (10 kg each).</li>
       <li><strong>Goblet Squat instead of Back Squat?</strong> Sub in during weeks 1–4 or if knee is still healing. Progress to back squat when knee is 100%.</li>
-      <li><strong>Knee still sore on Tue?</strong> Skip Back Squat AND Leg Extension. Do Leg Press twice (once heavy 5×6-8, once volume 3×10-12) plus Bulgarian Split Squat 3×10/leg.</li>
-      <li><strong>Lower back bothered by RDL?</strong> Swap for Barbell Hip Thrust or Cable Pull-Through — both hit glutes/hams without the spinal load.</li>
+      <li><strong>Knee still sore on Tue?</strong> Skip Back Squat AND Leg Extension. Do Leg Press twice + Bulgarian Split Squat 3×10/leg.</li>
+      <li><strong>Lower back bothered by RDL?</strong> Swap for Barbell Hip Thrust or Cable Pull-Through — both hit glutes/hams without spinal load.</li>
+      <li><strong>Wed gym too crowded for supersets?</strong> Do everything as straight sets. Session becomes ~90 min but volume is identical.</li>
       <li><strong>No T-bar row?</strong> Chest-supported DB row on incline bench works.</li>
       <li><strong>No Cable Fly setup?</strong> DB Fly on flat or incline bench works, though slightly more shoulder stress.</li>
-      <li><strong>Weighted Pull-up too hard?</strong> Assisted machine or bands until 3 × 6 clean at bodyweight.</li>
+      <li><strong>Bayesian Cable Curl station busy?</strong> Do a second set of Incline DB Curls in its place — you'll get long-head work either way. Or standing DB curl with elbows pulled slightly back (10–15° behind torso) mimics the same stretch angle.</li>
     </ul>
   </div>
 
   <footer>
-    4-day PPLU · Dedicated legs · Priority Wed · Rebuild the foundation
+    4-day PPLU · Dedicated legs · Wed antagonist supersets · Rebuild the foundation
   </footer>
 
 </div>
